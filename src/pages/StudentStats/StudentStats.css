@@ -1,0 +1,40 @@
+.leftStats {
+    float:left;
+    width: 50%;
+}
+.rightStats {
+    float: right;
+    width: 50%;
+}
+
+.statSection {
+    border: 2px solid blue;
+    overflow: hidden;
+}
+.standardSection {
+    border: 1px  dashed red;
+}
+
+.container {
+    overflow: hidden;
+  }
+
+.popUpBtn {
+    position: fixed;
+    top: 200px;
+    right: 0;
+}
+
+.popUp {
+    position: fixed;
+    top: 240px;
+    right: 0;
+    background-color: #f1f1f1;
+    width: 300px;
+    border: 3px solid #73AD21;
+    min-width: 160px;
+    height: 400px;
+    overflow-y: scroll;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
