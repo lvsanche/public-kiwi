@@ -1,6 +1,6 @@
 import LoadStandards from './LoadStandards';
 import { connect } from 'react-redux';
-import { addTempStandard, updateTempClassStandards } from '../../../services/actions/tempClass';
+import { addTempStandard, updateTempClassStandards } from '../../../services/actions/temp';
 import { compose } from 'recompose';
 import withAuthorization from '../../SharedComponents/auth/withAuthorization';
 

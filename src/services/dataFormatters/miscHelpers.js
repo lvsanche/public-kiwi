@@ -68,8 +68,14 @@ export const getAssessmentArrayByStandard = (assessments, standardID) => {
 }
 
 
-export const convertObjToArray = (obj) => 
-  Object.keys(obj).map(key => obj[key])
+export const convertObjToArray = (obj) => {
+  if(obj === null || obj === undefined){
+    return []
+  }
+  
+  return Object.keys(obj).map(key => obj[key]);
+}
+  
 
 export const addStandardNameToAssessments = ( assessmentsArray, standards) => {
   var newAssessmentsWithStandard = assessmentsArray.slice();
@@ -105,4 +111,21 @@ export const convertCriteriaGradeToNumber = ( maxGrade, grade ) =>{
           return 0;
       }
   }
+};
+
+
+export const flattenAssessmentsStructure = ( assessments ) => {
+  // console.log(objArray);
+	var arrayOfStds = convertObjToArray(assessments);
+	var filteredArray = arrayOfStds.filter( obj => Object.keys(obj).length > 0 );
+	// console.log(filteredArray); //array of objects
+  
+  var allAssessments = [];
+  
+	filteredArray.forEach( obj => {
+		const arr = convertObjToArray(obj);
+		arr.forEach( assess => allAssessments.push(assess));
+  });
+  
+	return allAssessments;
 };

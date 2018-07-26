@@ -5,16 +5,17 @@ const standard = (state, action) => {
           state,
           {
             standardName: action.standardName,
-            assessmentType: action.assessmentType,
+            gradeType: action.gradeType,
             subject: action.subject,
             standardDetails: action.standardDetails
           }
       )
     case 'ADD_STANDARD':
       return {
-        id: action.id,
+        standardID: action.standardID,
+        classID: action.classID,
         standardName: action.standardName,
-        assessmentType: action.assessmentType,
+        gradeType: action.gradeType,
         subject: action.subject,
         standardDetails: action.standardDetails
       }
@@ -30,7 +31,7 @@ const standards = (state = {}, action) => {
     case 'EDIT_STANDARD':
     case 'ADD_STANDARD':
       return Object.assign({}, state, {
-      [action.id]: standard(state[action.id], action)
+      [action.standardID]: standard(state[action.standardID], action)
     })
     default:
       return state;

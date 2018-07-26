@@ -30,7 +30,7 @@ class AddClass extends Component {
     handleSchoolChange(value){
         this.setState({'school': value})
     }
-
+    
     handleCancel(){
         const { clearTempAll, history } = this.props;
         this.setState({ ...INITIAL_STATE });

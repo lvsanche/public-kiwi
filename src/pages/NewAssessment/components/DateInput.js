@@ -1,13 +1,12 @@
 import React from 'react';
+import DatePicker from 'react-date-picker';
 
 const DateInput = ({labelText, handleChange, value}) =>
     <div className="dateInput">
         <label>{labelText}</label>
-        <input
+        <DatePicker 
+            onChange={handleChange}
             value={value}
-            onChange={ event => handleChange(event.target.value) }
-            type="date"
-            placeholder="YYYY/MM/DD"
             />
     </div>
 

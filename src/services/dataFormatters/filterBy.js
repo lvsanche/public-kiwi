@@ -1,73 +1,112 @@
 
-import { convertObjToArray } from './miscHelpers';
+import { convertObjToArray, flattenAssessmentsStructure } from './miscHelpers';
 
+//will be expecting an assessment Object
+export const filterAssessments = ( filters, objArray, standards) => {
+	// var objArray = convertObjToArray(objArray);
+	// var objArray = Object.keys(objArray).map( stdID => objArra
+	var allAssessments = flattenAssessmentsStructure(objArray);
 
-export const filterAssessments = ( filters, assessments) => {
-	var assessmentsArray = convertObjToArray(assessments);
 	//gradingType first
-	return filterBySearch(filters.searchText, filterBySubject(filters.subject,
-		filterByGradingType(filters.gradingType, assessmentsArray))) ;
+	// return filterBySearch(filters.searchText, filterBySubject(filters.subject,
+	// 	filterByGradeType(filters.gradeType, allAssessments))) ;
+	return  filterAssessmentsBySubject(filters.subject, standards, filterBySearch(filters.searchText, filterAssessmentsByGradeType(filters.gradeType, standards, allAssessments) ) );
 };
 
 ///actual filters go here ////////////////////////////////
 
 //used to filter assessments
-export const filterByGradingType = (gradingType, assessmentsArray) => {
-	var toRet;
-	if( gradingType === 'all'){
-		return assessmentsArray;
+export const filterAssessmentsByGradeType = (gradeType, standards, objArray) => {
+	var toRet = [];
+	if( gradeType === 'all'){
+		return objArray;
 	}
 	else{
-		if( gradingType.includes('-') ){
-			var newFilters = gradingType.split('-');
-			toRet = assessmentsArray.filter(assessment => assessment.gradingType === 'criteria');
+		const standardArray = convertObjToArray(standards);
+		
+		if( gradeType.includes('criteria') ){
+			var newFilters = gradeType.split('-');
+			
+			const standardsToRet = filterByGradeType('criteria', standardArray);
+			standardsToRet.forEach( standard => {
+				var temp = filterByStandard(standard.standardID, objArray);
+				temp.forEach( assessment => toRet.push(assessment));
+			});
+
 	
 			if( newFilters[1] === 'categories'){
-				toRet =  toRet.filter(assessment => assessment.maxGrade === '+');
+				toRet =  toRet.filter(listItem => listItem.maxGrade === '+');
 			}
 			else{
-				toRet = toRet.filter(assessment => assessment.maxGrade !== '+');
+				toRet = toRet.filter(listItem => listItem.maxGrade !== '+');
 			}
 		}
 		else {
-			toRet =  assessmentsArray.filter(assessment => assessment.gradingType === gradingType);
+			const standardsToRet = filterByGradeType(gradeType, standardArray);
+			standardsToRet.forEach( standard => {
+				var temp = filterByStandard(standard.standardID, objArray);
+				temp.forEach( assessment => toRet.push(assessment));
+			});
 		}
 		return toRet;
 	}
 }
 
 //used to filter standards
-export const filterByAssessmentType = (assessmentType, standardArray) => {
-	return standardArray.filter( std => std.assessmentType === assessmentType)
+export const filterByGradeType = (gradeType, objArray) => {
+	return objArray.filter( listItem => listItem.gradeType === gradeType)
 }
 
 
 
-export const filterBySearch = (searchText, assessmentsArray) => {
+export const filterBySearch = (searchText, objArray) => {
 	if (searchText === ''){
-		return assessmentsArray;
+		return objArray;
 	}
 	else {
-		return assessmentsArray
-				.filter( assessment => 
-					assessment.standardName.includes(searchText))
+		return objArray
+				.filter( listItem => 
+					listItem.standardName.includes(searchText))
 	}
 }
-export const filterBySubject = (subject, assessmentsArray) => {
+export const filterBySubject = (subject, objArray) => {
 	if(subject === 'all'){
-		return assessmentsArray;
+		return objArray;
 	}
 	else{
-		return assessmentsArray.filter( assessment => assessment.subject === subject)
+		return objArray.filter( listItem => listItem.subject === subject)
 	}
 };
 
-export const filterIDsBySubject = ( subject, assessmentsArray) => {
-	const filteredBySub = filterBySubject(subject, assessmentsArray);
-	return filteredBySub.map(assessment => assessment.id);
+export const filterAssessmentsBySubject = (subject, standards, objArray) => {
+	if(subject === 'all'){
+		return objArray;
+	}
+	else{
+		//first get the standardIDs by subject
+		const stdArray = convertObjToArray(standards);
+		const subjectIDs = filterIDsBySubject( subject, stdArray);
+		var toRet = [];
+		subjectIDs.forEach( stdID => {
+			filterByStandard(stdID, objArray).forEach(assessment => toRet.push(assessment))
+		});
+		return toRet;
+	}
+};
+
+
+//will be used to sort out standardIDs
+export const filterIDsBySubject = ( subject, objArray) => {
+	const filteredBySub = filterBySubject(subject, objArray);
+	return filteredBySub.map(listItem => listItem.standardID);
+}
+
+export const filterIDsByGradeType = ( gradeType, objArray) => {
+	const filteredByGrade = filterByGradeType(gradeType, objArray);
+	return filteredByGrade.map(listItem => listItem.standardID);
 }
 
 
-export const filterByStandard = ( standardID, assessmentsArray ) => {
-	return assessmentsArray.filter(assess => assess.standardID === standardID)
+export const filterByStandard = ( standardID, objArray ) => {
+	return objArray.filter(listItem => listItem.standardID === standardID)
 }

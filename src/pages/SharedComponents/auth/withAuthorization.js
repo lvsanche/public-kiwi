@@ -20,17 +20,14 @@ const withAuthorization = (authCondition) => (Component) => {
     }
   }
 
-  const mapStateToProps = (state, ownProps) => ({
-    authUser: state.sessionState.authUser,
-    testAUTH: ownProps,
-    testState: state,
+  const mapStateToProps = (state) => ({
+    authUser: state.session.authUser
   });
 
   return compose(
     withRouter,
     connect(mapStateToProps),
   )(WithAuthorization);
-  // return connect (mapStateToProps)(WithAuthorization);
 }
 
 export default withAuthorization;

@@ -6,29 +6,29 @@ export const addGradesStudent = (studentID, assessmentID, grade) => ({
   }
 );
 
-export const editStudent = (id, grades) => ({
+export const editStudent = (studentID, grades) => ({
     type: 'EDIT_STUDENT',
-    id,
+    studentID,
     grades
   }
   );
   
-export const addStudent = (id, firstName, lastName, currentClass) => ({
+export const addNewStudent = (studentID, firstName, lastName, classID) => ({
     type:'ADD_STUDENT',
-    id,
+    studentID,
     grades: {},
     firstName,
     lastName,
-    currentClass,
+    classID,
 }
 );
 
-export const addExistingStudent = (id, firstName, lastName, grades, currentClass) => ({
+export const addExistingStudent = ({studentID, firstName, lastName, grades, classID}) => ({
     type: 'ADD_STUDENT',
-    id,
+    studentID,
     firstName,
     lastName,
-    currentClass,
+    classID,
     grades
 }
 );

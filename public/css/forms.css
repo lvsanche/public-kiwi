@@ -1,0 +1,128 @@
+/*FORM STYLE*/
+form div > input,
+form div > select {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    display: block;
+    padding: 0.25em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form label {
+    font-size: 1.5em;
+    display: inline-block;
+    margin-bottom: 0.25em;
+}
+form {
+    padding: 1em;
+}
+/*FORM CONTAINER*/
+.form-container {
+    background-color: #fff;
+}
+
+/*TEXT INPUT */
+.textInput-short {
+    display: flex;
+    align-items: center;
+    width: 60%;
+}
+.textInput-short > label {
+    margin-right: 0.5em;
+    font-size: 1em;
+}
+.textInput-short > input {
+    width: 50%;
+}
+.textInput {
+    box-sizing: border-box;
+    padding: 1em 0;
+}
+.textInput input {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    display: block;
+    padding: 0.25em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* SELECTOR INPUT CONTAINER*/
+.selectorInput,
+.dateInput{
+    padding: 1em 0;
+}
+
+/* DATE INPUT */
+.dateInput > label {
+    display: block;
+    margin-bottom: 0.25em;
+}
+.dateInput > input {
+    /* width: 12em; */
+}
+.react-calendar__month-view__days__day,
+.react-calendar__navigation button {
+    color: black;
+}
+.react-date-picker__button__icon {
+    margin: 0;
+    box-shadow: none;
+}
+
+/*CHECKBOX INPUT */
+.checkboxInput {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin: 1em 0;
+}
+.checkboxInput > input {
+    width: 1em;
+}
+.checkboxInput > label {
+    display: inline;
+    font-size: 1em;
+    margin-left: .5em;
+}
+
+/*RADIO BTN STYLES*/
+.radio-input-container {
+    margin: 0.5em 0;
+}
+.radio-button-container label,
+.radio-button-container input {
+    cursor: pointer;
+}
+
+/*Letter Input Container*/
+.letter-input-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+/*LETTER INPUT STLYING*/
+.letter-items {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin: 0.25em 0;
+    flex: 0 0 9%;
+}
+.letter-items label{
+    text-transform: uppercase;
+    margin-right: 0.25em;
+}
+
+/*FILE INPUT*/
+.fileInput {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.fileInput label {
+    padding: 0.25em;
+}

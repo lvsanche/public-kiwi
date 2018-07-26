@@ -30,7 +30,7 @@ const StudentList = ({students, onStudentClick}) => (
 
 const mapStateToProps = (state) => ({
   students: state.students,
-  authUser: state.sessionState.authUser
+  authUser: state.session.authUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

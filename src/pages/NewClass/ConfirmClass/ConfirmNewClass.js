@@ -5,6 +5,7 @@ import StandardItem from '../../SharedComponents/listItems/StandardItem';
 import StudentItem from '../../SharedComponents/listItems/StudentItem';
 import { standards, students, classes, users } from '../../../services/api';
 import * as routes from '../../../constants/routes';
+
 class ConfirmNewClass extends Component {
 
     constructor(props){
@@ -14,38 +15,44 @@ class ConfirmNewClass extends Component {
     }
 
     handleSubmit() {
-        const { teacherName, newStandards, authUser, nClass,
-          newStudents, history, clearTempAll, setUser, setCurrentClass,
-          addStandard, addStudent } = this.props;
+        const { teacherName, newStandards, nClass, setUpAssessments,
+          newStudents, history, clearTempAll, setTeacherName, setClassID,
+          addExistingStandard, addNewStudent } = this.props;
+        
+        var standardObj = {};
         Object.keys(newStandards).forEach( standardID => {
-          const {standardName, standardDetails, assessmentType, subject} = newStandards[standardID];
-          standards.doCreateStandard( authUser.uid, standardID, standardName, standardDetails, assessmentType, subject )
-          .then( () => {
-            addStandard(standardID, standardName, assessmentType, subject, standardDetails );
-          })
-          .catch( error => console.log(error));
-        });
-
+            const { standardName, standardDetails, gradeType, subject} = newStandards[standardID];
+            standards.postNewStandard(standardID, nClass.id, standardName, standardDetails, gradeType, subject)
+            .then( () => {
+                addExistingStandard(newStandards[standardID]);
+                standardObj[standardID] = {};
+            })
+            .catch( error => console.log(error));
+            });
+        
+        //time to use the standardObj
+        setUpAssessments(standardObj);
 
         Object.keys(newStudents).forEach( studentID => {
           const {firstName, lastName} = newStudents[studentID];
-          students.doCreateNewStudent( studentID, firstName, lastName, nClass.id )
+          students.postNewStudent( studentID, firstName, lastName, nClass.id )
           .then( () => {
-            addStudent(studentID, firstName, lastName, nClass.id);
+            addNewStudent(studentID, firstName, lastName, nClass.id);
           })
           .catch( error => console.log(error));
         });
 
 
-        const { id, year, grade, school, teacher, standardList, studentList} = nClass;
-        classes.doCreateClassWithStudentsAndStandards(id, teacher, year, grade, school, standardList, studentList)
+        const { id, year, grade, schoolName, teacherID, standardList, studentList} = nClass;
+        classes.postNewClassWithStudentsAndStandards(id, teacherID, year, grade, schoolName, standardList, studentList)
         .then( () => {
-          setUser(teacherName);
-          setCurrentClass(id);
+          setTeacherName(teacherName);
+          setClassID(id);
         })
         .catch( error => console.log(error));
         //empty the Temp Class, set the currentClass
-        users.doAddClassToUser(teacher, id).catch(error => console.log(error));
+        users.postClassToUser(teacherID, id).catch(error => console.log(error));
+        
         clearTempAll();
         history.push(routes.DASHBOARD);
     }
@@ -60,7 +67,7 @@ class ConfirmNewClass extends Component {
         const { nClass , newStudents, newStandards, teacherName  } = this.props;
         return (
             <div className="multi-card-container flex-container-cols">
-                <ClassItem {...nClass} username={teacherName} />
+                <ClassItem {...nClass} teacherName={teacherName} />
                 <StandardsTable standards={newStandards} />
                 <StudentsTable students={newStudents} />
                 <div className="button-container">
@@ -95,7 +102,7 @@ const StandardsTable = ({ standards } ) =>
                 </thead>
                 <tbody>
                 {
-                    Object.keys(standards).map( (standardKey,index) => ( <StandardItem key={index} { ...standards[standardKey]} />))
+                    Object.keys(standards).map( (standardID , index) => ( <StandardItem key={index} { ...standards[standardID]} />))
                 }
                 </tbody>
             </table>

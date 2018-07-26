@@ -1,0 +1,17 @@
+.grade-table-container h3 {
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-align: center;
+    background: black;
+    color: white;
+    font-size: 1.25em;
+}
+.grade-table-container table {
+    margin: 0.5em 0;
+}
+.grade-table-container td:first-child {
+    text-align: left;
+}
+.grade-table-container td:last-child {
+    text-align: right;
+}

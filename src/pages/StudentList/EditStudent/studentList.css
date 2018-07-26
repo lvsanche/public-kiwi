@@ -11,5 +11,23 @@
     padding: 0.25em;
 }
 .barContainer button {
-    margin: 0;
+    margin: 0.5em 1em;
+}
+.sortFilterBar {
+    display: none;
+    justify-content: space-around;
+}
+
+.grade-input-table td,
+.grade-input-table th{
+    text-align: left;
+}
+
+.grade-input-table td > div > div >.button-container > button {
+    font-size: 0.75em;
+    margin: 0.25em 0;
+}
+.grade-input-table td > div > div > .button-container {
+    display: block;
+    margin: 0.25em 0;
 }

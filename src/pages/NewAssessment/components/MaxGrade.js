@@ -27,8 +27,8 @@ class MaxGrade extends Component {
 
     render(){
         const {criteriaNum, maxGrade} = this.state;
-        const { gradingType } = this.props;
-        if(gradingType === 'criteria'){
+        const { gradeType } = this.props;
+        if(gradeType === 'criteria'){
             const maxNum = (criteriaNum) ? <MaxGradeNum value={maxGrade} handleGradeChange={this.handleGradeChange} />
             : null ;
             return (

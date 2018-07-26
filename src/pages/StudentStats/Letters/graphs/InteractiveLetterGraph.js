@@ -32,7 +32,7 @@ class InteractiveLetterGraph extends Component {
                       value={assessmentID} >
                         <option value='latest'>Latest</option>
                         {
-                            filterByStandard(standard.id, convertObjToArray(assessments)).map(assessmentOptions)
+                            filterByStandard(standard.standardID, convertObjToArray(assessments)).map(assessmentOptions)
                         }
                     </select>
                     <AssessmentLetterGraph 
@@ -50,6 +50,6 @@ class InteractiveLetterGraph extends Component {
     }
 };
 
-const assessmentOptions = (assessment) => <option key={assessment.id} value={assessment.id} >{assessment.date} </option>
+const assessmentOptions = (assessment) => <option key={assessment.assessmentID} value={assessment.assessmentID} >{assessment.date} </option>
 
 export default InteractiveLetterGraph;

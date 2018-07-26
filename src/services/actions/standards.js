@@ -1,18 +1,20 @@
 
-export const addStandard = (id, standardName, assessmentType, subject, standardDetails) => ({
+export const addExistingStandard = ({standardID, classID, standardName, gradeType, subject, standardDetails}) => ({
     type: 'ADD_STANDARD',
-    id,
+    standardID,
+    classID,
     standardName,
-    assessmentType,
+    gradeType,
     subject,
     standardDetails
   });
 
-export const editStandard = (id, standardName, assessmentType, subject, standardDetails) => ({
+export const editStandard = (standardID, classID, standardName, gradeType, subject, standardDetails) => ({
     type:'EDIT_STANDARD',
-    id,
+    standardID,
+    classID,
     standardName,
-    assessmentType,
+    gradeType,
     subject,
     standardDetails
   }

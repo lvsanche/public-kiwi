@@ -13,14 +13,15 @@
     border-bottom: 1px solid lightgrey;
 }
 
-.navLink-container a {
+.navLink-container a,
+.nav div{
     border-bottom: 1px solid lightgrey;
 }
 
 .navLink-container a,
 .navbar p {
     display: block;
-    padding: 1em 0;
+    padding: 1em 0.25em;
     font-size: 1.5em;
     text-align: center;
     text-decoration: none;
@@ -33,6 +34,10 @@
     color: white;
 }
 
+.nav-link {
+    cursor: pointer;
+}
+
 .topbar {
     width: 100%;
     height: 5vh;
@@ -43,6 +48,7 @@
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
+    box-shadow: 2px 0 10px 0 rgba(0,0,0,0.16), 5px 0 10px 0 rgba(0,0,0,0.12);
 }
 .logo {
     font-size: 1.5em;

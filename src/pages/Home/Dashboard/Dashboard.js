@@ -2,9 +2,9 @@ import React from 'react';
 import WholeClassLetterBarGraph from './graphs/WholeClassLetterBarGraph';
 import WholeClassCriteriaGraph from './graphs/WholeClassCriteriaGraph';
 
-export const Dashboard = ({ currentClass, ...other}) => {
-    if(currentClass === null){
-        return( <div className="card">
+export const Dashboard = ({ classID, ...other}) => {
+    if(classID === null){
+        return( <div className="card card-30">
                     <div className="card-title">
                         <h2>Next Step</h2>
                     </div>
@@ -25,6 +25,8 @@ export const Dashboard = ({ currentClass, ...other}) => {
                             {...other}
                             />
                     </div>
+                   
                 </div>)
     }
 }
+ 

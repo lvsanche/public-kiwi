@@ -32,7 +32,7 @@ const options = (student, standardName) => {
 
 
 const StudentLetterProgressGraph = ( {student, standard, assessments } ) => {
-  const dataSet = computeProgressDataSetsFromLetterStandard(student, standard, assessments);
+  const dataSet = computeProgressDataSetsFromLetterStandard(student, standard.standardID, assessments);
   return (
     <Line data={dataSet} options={options(student, standard.standardName)}/>
   )

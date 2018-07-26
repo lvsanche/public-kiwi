@@ -1,18 +1,17 @@
 import { randomBarColorMaker} from './miscFormatters';
 import { compareDateAscendingAssessments, compareDateDescendingAssessments, convertObjToArray } from './miscHelpers';
-import { filterByStandard } from './filterBy';
 
-export const computeProgressDataSetsFromLetterStandard = (student, standard, assessments) => {
-  const assessmentArray = convertObjToArray(assessments);
-  const standardArray = filterByStandard(standard.id, assessmentArray);
+export const computeProgressDataSetsFromLetterStandard = (student, standardID, assessments) => {
+  
+  const assessmentsArray = convertObjToArray( assessments[ standardID ])
 
-  var sortedAssessments = standardArray.sort(compareDateAscendingAssessments);
+  var sortedAssessments = assessmentsArray.sort(compareDateAscendingAssessments);
  
   var labels = [];
   var data = [];
   sortedAssessments.forEach( assessment => {
-      const { date, id } = assessment;
-      const grade = student.grades[id];
+      const { date, assessmentID } = assessment;
+      const grade = student.grades[assessmentID];
       labels.push(date);
       var countKnown = 0;
       Object.keys(grade).forEach( letter => {
@@ -47,9 +46,10 @@ const alphabetLabels = [
 ];
 
 export const computeLatestDataSetFromLetterStandard = (student, standard, assessments) => {
-  const assessmentArray = convertObjToArray(assessments);
-  const standardAssessArray = filterByStandard(standard.id, assessmentArray);
-  const sortedAssessments = standardAssessArray.sort(compareDateDescendingAssessments);
+
+  const assessmentArray = convertObjToArray( assessments[standard.standardID]);
+  const sortedAssessments = assessmentArray.sort(compareDateDescendingAssessments);
+
   if( sortedAssessments.length > 0 ){
     //return the latest
     return computeDataSetFromLetterAssessment( student, sortedAssessments[0]);
@@ -75,8 +75,8 @@ export const computeLatestDataSetFromLetterStandard = (student, standard, assess
 
 export const computeDataSetFromLetterAssessment = (student, assessment) => {
   //find if the maxGrade is number or + }
-  const { standardName, id } = assessment;
-  const grade = student.grades[id] // this is an object with letters as keys
+  const { standardName, assessmentID } = assessment;
+  const grade = student.grades[assessmentID] // this is an object with letters as keys
   var dataSet = randomBarColorMaker(standardName);
 
   dataSet['data'] = convertLetterObjToData(grade);

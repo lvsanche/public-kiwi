@@ -36,7 +36,7 @@ class GradeItem extends Component{
 	    else{
 	    	return(
 				<tr>
-			      	<td>{this.props.standardName} + Not categoru</td>
+			      	<td>{this.props.standardName} + Not category</td>
 				  	<td>{this.props.date}</td>
 					<td>{JSON.stringify(this.props.value)}</td>
 			  	</tr>

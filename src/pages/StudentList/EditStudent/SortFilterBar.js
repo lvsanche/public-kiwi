@@ -9,7 +9,7 @@ const SortFilterBar = ({ sortBy, filters, handleSortChange, handleFilterChange, 
 	</div>
 	<div className="sortFilterBar" style={{display: display}}>
 		<SortByDropDown sortBy={sortBy} handleSortChange={handleSortChange} />
-		<GradingTypeDropDown gradingType={filters.gradingType} handleGradeChange={handleFilterChange} />
+		<GradingTypeDropDown gradingType={filters.gradeType} handleGradeChange={handleFilterChange} />
 		<SubjectByDropDown subject={filters.subject} handleSubjectChange={handleFilterChange} />
 		<SearchTextInput searchText={filters.searchText} handleSearchChange={handleFilterChange} />
 		<ResetSortFilterBar handleReset={handleReset} />
@@ -55,12 +55,12 @@ const SubjectByDropDown = ({subject, handleSubjectChange}) =>
 	</div>
 
 
-const GradingTypeDropDown= ({ gradingType, handleGradeChange}) =>
+const GradingTypeDropDown= ({ gradeType, handleGradeChange}) =>
 	<div className="barComponent">
 		<label> Grading type </label>
 		<select 
-			value={gradingType}
-			onChange={event => handleGradeChange('gradingType', event.target.value)}>
+			value={gradeType}
+			onChange={event => handleGradeChange('gradeType', event.target.value)}>
 			<option value='all'>All</option>
 			<option value='counting'>Counting</option>
 			<option value='letterCounting'>Letters</option>

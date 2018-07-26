@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     username: '',
     firstName: '',
     lastName: '',
+    email: '',
     passwordOne: '',
     passwordTwo: '',
     error: null,
@@ -23,7 +24,6 @@ class SignUpForm extends Component {
     }
 
     handleSubmit(event){
-        console.log(this.state);
         if( errorDetect(this.state) )
         {
             this.setState({error: errorMsg(this.state)})
@@ -34,7 +34,7 @@ class SignUpForm extends Component {
 
             auth.doCreateUserWithEmailAndPassword(email, passwordOne)
                 .then(authUserReq => {
-                    users.doCreateUser(authUserReq.user.uid, firstName, lastName, email)
+                    users.postNewUser(authUserReq.user.uid, firstName, lastName, email)
                     .then( () => {
                         this.setState({...INITIAL_STATE});
                         history.push(routes.DASHBOARD);
@@ -57,7 +57,8 @@ class SignUpForm extends Component {
     }
 
     render() {
-        const { firstName, lastName, email, passwordOne, passwordTwo, error} = this.state;
+        const { firstName, lastName, email,
+            passwordOne, passwordTwo, error} = this.state;
 
         return(
             <form onSubmit={this.handleSubmit} >
@@ -74,7 +75,6 @@ class SignUpForm extends Component {
                         value={lastName}    
                     />
                 </div>
-                
                 <GenericTextInput
                     labelText={'Email Address'}
                     handleChange={this.handleChange('email')}

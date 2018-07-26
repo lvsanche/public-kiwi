@@ -30,8 +30,8 @@ const configureStore = () => {
     saveState({
 		standards: store.getState().standards,
 	  students: store.getState().students,
-		sessionState: store.getState().sessionState,
-		tempNewClasses: store.getState().tempNewClasses,
+		session: store.getState().session,
+		temp: store.getState().temp,
 		assessments: store.getState().assessments
     });
   }, 1000));

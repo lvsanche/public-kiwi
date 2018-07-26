@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import AssessmentCriteriaGraph from './AssessmentCriteriaGraph';
 import {convertObjToArray} from '../../../../services/dataFormatters/miscHelpers';
-import { filterByStandard } from '../../../../services/dataFormatters/filterBy';
 
 const INITIAL_STATE = {
     assessmentID: 'latest'
@@ -32,7 +31,7 @@ class InteractiveCriteriaGraph extends Component {
                       value={assessmentID} >
                         <option value='latest'>Latest</option>
                         {
-                            filterByStandard(standard.id, convertObjToArray(assessments)).map(assessmentOptions)
+                            convertObjToArray(assessments[standard.standardID]).map(assessmentOptions)
                         }
                     </select>
                     <AssessmentCriteriaGraph 
@@ -50,6 +49,6 @@ class InteractiveCriteriaGraph extends Component {
     }
 };
 
-const assessmentOptions = (assessment) => <option key={assessment.id} value={assessment.id} >{assessment.date} </option>
+const assessmentOptions = (assessment) => <option key={assessment.assessmentID} value={assessment.assessmentID}>{assessment.date}</option>
 
 export default InteractiveCriteriaGraph;

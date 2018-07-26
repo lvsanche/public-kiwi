@@ -1,19 +1,22 @@
 import { db } from '../firebase';
 
-export const doCreateNewStudent = (studentID, firstName, lastName, currentClass) =>
-  db.ref(`students/${studentID}`).set({
+export const postNewStudent = (studentID, firstName, lastName, classID) =>
+  db.ref(`students/${classID}/${studentID}`).set({
     studentID,
+    classID,
     firstName,
     lastName,
-    currentClass,
     'grades' : {}
   });
 
-export const doSetStudentGrades = ( studentID, assessmentID, grade ) =>
-  db.ref(`students/${studentID}/grades/${assessmentID}`).set(grade);
+export const postStudentGrade = ( studentID, classID, assessmentID, grade ) =>
+  db.ref(`students/${classID}/${studentID}/grades/${assessmentID}`).set(grade);
 
-  export const doSetAllStudentGrades = ( studentID, grades ) =>
-  db.ref(`students/${studentID}/grades`).set(grades);
+  export const postStudentGrades = ( studentID, classID, grades ) =>
+  db.ref(`students/${classID}/${studentID}/grades`).set(grades);
   
-export const onceGetStudent = (studentID) =>
-  db.ref(`students/${studentID}`).once('value');
+export const singleGetStudent = (studentID, classID) =>
+  db.ref(`students/${classID}/${studentID}`).once('value');
+
+export const getAllStudents = ( classID ) =>
+  db.ref(`students/${classID}`).once('value');

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import standards from './standards';
 import students from './students';
-import sessionReducer from './session';
+import session from './session';
 import classes from './classes';
-import tempNewClasses from './tempClass';
+import temp from './temp';
 import assessments from './assessments';
 
 const gradesApp = combineReducers({
@@ -11,8 +11,8 @@ const gradesApp = combineReducers({
   students,
   classes,
   assessments,
-  tempNewClasses,
-  sessionState: sessionReducer,
+  temp,
+  session
 });
 
 export default gradesApp;

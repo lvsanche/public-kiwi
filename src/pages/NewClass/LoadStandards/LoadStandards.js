@@ -37,12 +37,12 @@ class LoadStandards extends Component {
 		const { allStandards } = this.state;
 		event.preventDefault();
 		allStandards.forEach( standard => {
-			const { standardName, assessmentType, subject, standardDetails } = standard;
+			const { standardName, gradeType, subject, standardDetails } = standard;
 			const newStandard = addTempStandard(standardName,
-								assessmentType,
+								gradeType,
 								subject,
 								standardDetails);
-			updateTempClassStandards(newStandard.id);
+			updateTempClassStandards(newStandard.standardID);
 		});
 		this.setState({ ...INITIAL_STATE});
 		history.push(routes.ADD_STUDENTS);
@@ -81,7 +81,7 @@ class LoadStandards extends Component {
 		}
 		else {
 			return (
-				<div className="card">
+				<div className="card card-30">
 					<div className="card-title">
 						<h2>Load Standards</h2>
 					</div>

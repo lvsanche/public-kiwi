@@ -1,14 +1,17 @@
-import { findNewestAssessment, randomBarColorMaker, barColorSelector } from "../miscFormatters";
+import { barColorSelector } from "../miscFormatters";
+import { convertObjToArray } from "../miscHelpers";
+import { filterIDsByGradeType } from '../filterBy';
+import { compareDateDescendingAssessments } from '../miscHelpers'; 
 
 //method returns a complete data set
 export const wholeClassBarDataFormatter = (studentList, standards, assessments ) => {
     //first get the standards that have to do with Letters
-    const letStds = Object.keys(standards).filter(
-      stdID => standards[stdID].assessmentType === 'letterCounting' );
+    const letterStandards = convertObjToArray(standards)
+    const filteredStandardIDs = filterIDsByGradeType('letterCounting', letterStandards);
 
-    const students = Object.keys(studentList).map( id => studentList[id]);
-    const arrayOfDataSets = letStds.map( (stdID, index) =>
-      computeWholeClassLatestDataSetFromLetterStandard(assessments, students, stdID, standards[stdID].standardName, index)
+    const students = convertObjToArray(studentList);
+    const arrayOfDataSets = filteredStandardIDs.map( (standardID, index) =>
+      computeWholeClassLatestDataSetFromLetterStandard(assessments[standardID], students, standards[standardID].standardName, index)
     );
 
     // Now all the counters are in an array
@@ -26,18 +29,15 @@ export const wholeClassBarDataFormatter = (studentList, standards, assessments )
 };
 
 //students is an array of student objects
-const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students, standardID, standardName, color) => {
+const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students, standardName, color) => {
     //getting array of assessments of matching standard
-    const assessmentIDs = Object.keys(assessments).filter(
-      (asID) => assessments[asID].standardID === standardID );
-
+    const assessmentsArray = convertObjToArray(assessments);
+    var sortedAssessArray = assessmentsArray.sort( compareDateDescendingAssessments);
     //find the latest of the assessment if more than one exists
+
     var newestAssess;
-    if ( assessmentIDs.length > 1){
-      newestAssess = findNewestAssessment(assessmentIDs, assessments);
-    }
-    else if( assessmentIDs.length === 1){
-      newestAssess = assessmentIDs[0];
+    if ( sortedAssessArray.length > 0){
+      newestAssess = sortedAssessArray[0];
     }
     else{
       //must have 0 data
@@ -54,7 +54,7 @@ const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students,
       v:0, w:0, x:0, y:0, z:0, ñ:0 };
 
     students.forEach( (student) => {
-      var letters = student.grades[newestAssess]; //letters obj
+      var letters = student.grades[newestAssess.assessmentID]; //letters obj
       for ( var letter in letters){
         if ( letters[letter]){
           counter[letter]+=1;

@@ -1,0 +1,68 @@
+body {
+    background-color: #E0E4DC;
+    font-family: Raleway;
+}
+
+/*--------------------------------CONTAINERS*/
+
+/* APP CONTAINER*/
+.content{
+    margin-top: 5vh;
+    display: flex;
+}
+
+/*CONTAINER STYLING*/
+.container{
+    padding: 0 1em;
+}
+
+.half-container {
+    display: flex;
+    align-items: center;
+}
+
+.half-container div {
+    padding: 0 0.25em;
+    flex: 1;
+}
+
+/*MAIN CONTAINER STYLING*/
+.main-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    flex: 1;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-container-cols{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/*ERROR BANNER*/
+.error {
+    color: red;
+    background-color: bisque;
+}
+
+/*Footers*/
+.footer{
+    margin-bottom: 1em;
+}
+
+/*Multiple card container */
+.multi-card-container {
+    width: 100%;
+}
+.multi-card-container .card {
+    width: 80%;
+    margin: 1em 5em;
+}

@@ -1,12 +1,12 @@
 import AddClass from './AddClass';
-import {addTempClass, clearTempAll} from '../../../services/actions/tempClass';
+import {addTempClass, clearTempAll} from '../../../services/actions/temp';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import withAuthorization from '../../SharedComponents/auth/withAuthorization';
 
 const mapStateToProps = (state) => {
   return {
-    authUser: state.sessionState.authUser,
+    authUser: state.session.authUser,
   }
 }
 

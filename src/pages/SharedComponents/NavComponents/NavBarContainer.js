@@ -4,7 +4,7 @@ import * as routes from '../../../constants/routes';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TopContainerBar from './TopContainer';
-
+import StudentNavContainer from './StudentPopUpMenu/StudentNav';
 
 const generateNavbarLinks = (classroom, students) => {
     var links;
@@ -14,7 +14,7 @@ const generateNavbarLinks = (classroom, students) => {
             <NavLink to={routes.DASHBOARD}>Dashboard</NavLink>
             <NavLink to={routes.ADD_ASSESSMENT}>Add Assessment</NavLink>
             <NavLink to={routes.STANDARDS_LIST}>Standards</NavLink>
-            <NavLink to={routes.STUDENTS_LIST}>Students</NavLink>
+            <StudentNavContainer />
         </div>
     }
     else{
@@ -27,16 +27,17 @@ const generateNavbarLinks = (classroom, students) => {
 }
 
 const mapStateToProps = (state) => ({
-    classroom: state.sessionState.currentClass,
+    classID: state.session.classID,
     students: state.students,
-    firstName: state.sessionState.firstName,
-    visible: state.sessionState.authUser,
+    teacherName: state.session.teacherName,
+    visible: state.session.authUser,
   });
 
-const NavBarContainer = ({classroom, students, firstName, visible}) =>
+const NavBarContainer = ({classID, students, teacherName, visible}) =>
   (visible === null)? <div><TopContainerBar/></div> :
   <div>
-      <NavBar firstName={firstName} links={generateNavbarLinks(classroom, students)}/>
+      <TopContainerBar />
+      <NavBar teacherName={teacherName} links={generateNavbarLinks(classID, students)}/>
   </div>
 
 export default connect(mapStateToProps)(NavBarContainer);

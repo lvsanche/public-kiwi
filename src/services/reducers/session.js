@@ -1,18 +1,17 @@
 const INITIAL_STATE = {
     authUser: null,
-    userName: '',
-    currentClass: null,
+    teacherName: '',
+    classID: null,
 };
 
-const setUser = (state, action) => ({
+const setTeacherName = (state, action) => ({
     ...state,
-    firstName: action.firstName,
-    lastName: action.lastName
+    teacherName: action.teacherName
 });
 
-const setCurrentClass = (state, action) => ({
+const setClassID = (state, action) => ({
   ...state,
-  currentClass: action.currentClass
+  classID: action.classID
 })
 
 const setAuthUser = (state, action) => ({
@@ -20,19 +19,21 @@ const setAuthUser = (state, action) => ({
     authUser: action.authUser
 });
 
-function sessionReducer(state = INITIAL_STATE, action) {
+const session = (state = INITIAL_STATE, action) => {
     switch(action.type) {
       case 'SET_AUTH_USER' : {
         return setAuthUser(state, action);
       }
-      case 'SET_USER': {
-        return setUser(state, action);
+      case 'SET_TEACHER_NAME': {
+        return setTeacherName(state, action);
       }
-      case 'SET_CURRENT_CLASS': {
-        return setCurrentClass(state, action);
+      case 'SET_CLASS_ID': {
+        return setClassID(state, action);
       }
-      default : return state;
+      default: {
+        return state;
+      }
     }
 }
 
-export default sessionReducer;
+export default session;

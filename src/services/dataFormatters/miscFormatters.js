@@ -1,4 +1,5 @@
 const expandToArray = (f, l) => { var x=[]; var i=l-f; while(x.push(f++) <=i) {} return x;};
+
 export const createWholeDict = (inputStr) => {
     // console.log(inputStr);
     var rawArray = inputStr.split(',').map( st => st.trim() );
@@ -22,6 +23,10 @@ export const createWholeDict = (inputStr) => {
     return dict;
 };
 
+export const countingFromString = (inputStr) => {
+    const someDict = createWholeDict(inputStr);
+    return Object.keys(someDict).length;
+}
 
 //////////////////////Helper Functions //////////////////
 //returns the assessmentID that was last taken
@@ -62,7 +67,6 @@ export const barColorMaker = (txt, index) => {
 export const barColorSelector = ( txt, index ) => {
     const colors = [[105,77,117], [255,74, 28], [30, 88, 117], [159,194,204], [209,240,177] ];
     var rC = colors[index];
-    console.log('THiS IS WoKRING: ' + index);
     return {
         label: txt,
         backgroundColor: 'rgba('+rC[0]+','+rC[1]+','+rC[2]+',0.5)'
