@@ -13,7 +13,7 @@ Find it on https://project-kiwi-0123.firebaseapp.com
 ### Log In Information: 
 
 ```
- email: random@test.com
+ email: random@tester.com
  password: asdfgh
 ```
 
