@@ -27,12 +27,46 @@ const withAuthentication = (Component) => {
                     setClassID(classID);
 
                     //importing standards
+<<<<<<< HEAD
                     loadStandards(classID, setUpAssessments, addExistingStandard);
                     //import students 
                     loadStudents(classID, addExistingStudent);
                     //importing assessments
                     loadAssessments(classID, addExistingAssessment);
                     
+=======
+                    standards.getAllStandards(classID).then( snap => {
+                        const standardsObject = snap.val();
+
+                        //Need to set up assessments with the standards
+                        var standardsObj = {};
+                        Object.keys(standardsObject).forEach( standardID => standardsObj[standardID]= {});
+                        setUpAssessments(standardsObj);
+
+                        Object.keys(standardsObject).forEach(standardID => {
+                            addExistingStandard(standardsObject[standardID]);
+
+                            //importing assessments
+                            assessments.getAllAssessments(standardID).then( snap => {
+                                const assessmentsObject = snap.val();
+                                if(assessmentsObject !== null)
+                                {    
+                                    Object.keys(assessmentsObject).forEach( assessmentID => {
+                                        addExistingAssessment(assessmentsObject[assessmentID]);
+                                    });
+                                }
+                            }).catch(error => console.log(error)); // end of getAllAssessments
+                        });
+                    }).catch(error => console.log(error)); //end of getAllStandards
+
+                    //import students 
+                    students.getAllStudents(classID).then( snap => {
+                        const studentsObject = snap.val();
+                        Object.keys(studentsObject).forEach( studentID => {
+                            addExistingStudent(studentsObject[studentID]);
+                        });
+                    }).catch(error => console.log(error));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                 }
               })
               .catch(error => console.log(error))
@@ -59,7 +93,12 @@ const withAuthentication = (Component) => {
 
   const mapStateToProps = (state) => {
       return {
+<<<<<<< HEAD
         classID: state.session.classID
+=======
+        classID: state.session.classID,
+        state: state
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
       }
   };
 

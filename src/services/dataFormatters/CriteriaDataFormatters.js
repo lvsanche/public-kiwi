@@ -4,6 +4,11 @@ import { convertObjToArray, convertCriteriaGradeToNumber,
 
 
 export const computeProgressDataSetsFromCriteriaStandard = (student, standard, assessments) => {
+<<<<<<< HEAD
+=======
+    // const assessmentArray = convertObjToArray(assessments);
+    // const standardArray = filterByStandard(standard.standardID, assessmentArray);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     const assessmentsFromStandard = assessments[standard.standardID];
     const standardArray = convertObjToArray(assessmentsFromStandard);
     
@@ -14,6 +19,10 @@ export const computeProgressDataSetsFromCriteriaStandard = (student, standard, a
     sortedAssessments.forEach( assessment => {
         const { date, maxGrade, assessmentID } = assessment;
         const grade = student.grades[assessmentID];
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
         var gradeVal = convertCriteriaGradeToNumber(maxGrade, grade);
         
         labels.push(date);

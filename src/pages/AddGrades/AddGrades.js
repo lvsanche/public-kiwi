@@ -22,7 +22,10 @@ class AddGrade extends Component {
 
     componentWillUnmount(){
         window.scrollTo(0,0);
+<<<<<<< HEAD
         this.handleCancel();
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     }
 
     handleChange( value, studentID){
@@ -35,7 +38,10 @@ class AddGrade extends Component {
             studentGrades: currentGrades
         })
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     handleCancel() {
         this.setState({...INITIAL_STATE});
         this.props.clearTempAll();
@@ -63,7 +69,11 @@ class AddGrade extends Component {
             //add assessment locally and also post it 
             addExistingAssessment(assessment);
             assessments.postNewAssessment(assessment.assessmentID, assessment.standardID, 
+<<<<<<< HEAD
                 assessment.standardName, assessment.maxGrade, assessment.date, classID).catch( error => console.log(error));
+=======
+                assessment.standardName, assessment.maxGrade, assessment.date).catch( error => console.log(error));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
             
             clearTempAll();
 

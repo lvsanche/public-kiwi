@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { makeDictFromCountingString, countingLabelMaker, randomBarColorMaker, countingFromString  } from './miscFormatters';
+=======
+import { createWholeDict, countingLabelMaker, randomBarColorMaker, countingFromString  } from './miscFormatters';
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 import { compareDateAscendingAssessments, convertObjToArray, compareDateDescendingAssessments} from './miscHelpers';
 
 export const computeLatestDataSetFromCountingStandard = (student, standard, assessments) => {
@@ -23,7 +27,11 @@ export const computeLatestDataSetFromCountingStandard = (student, standard, asse
     else {
         assessStdArray.sort(compareDateDescendingAssessments);
         const latestAssess = assessStdArray[0];
+<<<<<<< HEAD
         const countingDict = makeDictFromCountingString(student.grades[latestAssess.assessmentID]);
+=======
+        const countingDict = createWholeDict(student.grades[latestAssess.assessmentID]);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
         dataSet['data'] = computeDataFromCountingDict(countingDict);
         title = "Counting for "+ standard.standardName + " was last assessed on "  + latestAssess.date;
         labels = countingLabelMaker(maxNum);
@@ -46,7 +54,11 @@ export const computeDataSetFromCountingAssessment = ( student, standard, assessm
   var dataSet = randomBarColorMaker('Numbers Known');
 
   const countingGrade = student.grades[assessment.assessmentID];
+<<<<<<< HEAD
   dataSet['data']  = computeDataFromCountingDict(makeDictFromCountingString(countingGrade));
+=======
+  dataSet['data']  = computeDataFromCountingDict(createWholeDict(countingGrade));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 
   const maxNum = dataSet['data'].length -1;
   

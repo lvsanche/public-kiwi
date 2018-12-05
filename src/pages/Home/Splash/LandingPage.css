@@ -5,6 +5,17 @@
     font-size: 2em;
     padding: 0.5em;
     text-align: center;
+<<<<<<< HEAD
+=======
+}
+
+.landingPage-content p {
+    display: block;
+}
+
+.landingPage-links {
+    padding: 1em;
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     width: 100%;
 }
 

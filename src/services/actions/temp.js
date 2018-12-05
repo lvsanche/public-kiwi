@@ -6,6 +6,11 @@ export const addTempClass = ( year, grade, schoolName, teacherID ) => ({
     grade,
     schoolName,
     teacherID,
+<<<<<<< HEAD
+=======
+    standardsList: {},
+    studentList: {},
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
   });
 
 export const addTempAssessment = ( date, standardID, maxGrade, standardName ) => ({
@@ -17,10 +22,16 @@ export const addTempAssessment = ( date, standardID, maxGrade, standardName ) =>
   standardName
 });
   
+<<<<<<< HEAD
 export const addTempStandard = (standardName, classID, gradeType, subject, standardDetails) => ({
   type: 'ADD_TEMP_STANDARD',
   standardID: v4(),
   classID,
+=======
+export const addTempStandard = (standardName, gradeType, subject, standardDetails) => ({
+  type: 'ADD_TEMP_STANDARD',
+  standardID: v4(),
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
   standardName,
   gradeType,
   subject,

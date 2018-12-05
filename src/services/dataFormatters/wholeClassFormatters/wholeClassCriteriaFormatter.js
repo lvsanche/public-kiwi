@@ -1,6 +1,10 @@
 import { convertObjToArray, compareDateDescendingAssessments, convertCriteriaGradeToNumber, compareAlphaAscendingStandardNames } from "../miscHelpers";
 import { filterByGradeType } from "../filterBy";
+<<<<<<< HEAD
 import { barColorSelector } from "../miscFormatters";
+=======
+import { barColorMaker } from "../miscFormatters";
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 
 
 
@@ -8,6 +12,11 @@ export const wholeClassCriteriaCounter = (studentList, standards, assessments) =
     //get standardIDs that are criteria based
     const standardsArray = convertObjToArray(standards);
     // const assessArray = convertObjToArray(assessments);
+<<<<<<< HEAD
+=======
+
+    const criteriaStandards = filterByGradeType('criteria', standardsArray);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 
     const criteriaStandards = filterByGradeType('criteria', standardsArray);
     var assessIDByStandard = {};
@@ -30,6 +39,10 @@ export const wholeClassCriteriaCounter = (studentList, standards, assessments) =
         }
     )
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     //ready to go count
     const studentsArray = convertObjToArray(studentList);
     studentsArray.forEach( student => {
@@ -40,6 +53,7 @@ export const wholeClassCriteriaCounter = (studentList, standards, assessments) =
             countByAssessment[stdID][assessmentID][assessGrade]+=1; //increment the count
         });
     })
+<<<<<<< HEAD
 
     return countByAssessment; // obj with standardID as key, with array of count 
 }
@@ -89,6 +103,22 @@ export const wholeClassCriteriaDataSetFormatter = (studentList, standards, asses
 
     const countByAssessment = wholeClassCriteriaCounter( studentList, standards, assessments);
     
+=======
+    // console.log(countByAssessment);
+    // array of 3 values per assessment ID exist
+    //must create a dataSet per -, ~, + grades and labels
+    //lets order the assessment IDs by subject and then in descending assessment date 
+
+    // seperate standards by subject: 1. math 2. languageReading 3. motorSkills 4. socialEmotional
+    //TODO idea to seperate/distinguish the datasets via a 
+    // var latestAssessments = Object.keys(countByAssessment).map( stdID => Object.keys(assessments[stdID]).map( assessmentID => assessments[stdID][assessmentID]) );
+    // const subjects = ['math', 'languageReading', 'motorSkills', 'socialEmotional'];
+    // console.log(latestAssessments);
+    // const orderedAssessmentsArrays = subjects.map(
+    //     sub => filterBySubject(sub, latestAssessments).sort(compareAlphaAscendingStandardNames)
+    // )
+
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     //use standards to get them in alphabetical order
     var standardsWithCount = Object.keys(countByAssessment).map( stdID => standards[stdID]);
     standardsWithCount.sort(compareAlphaAscendingStandardNames);

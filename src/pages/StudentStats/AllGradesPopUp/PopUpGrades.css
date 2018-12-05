@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 .grade-table-container h3,
 .noGradeContainer h3 {
+=======
+.grade-table-container h3 {
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     font-weight: bolder;
     text-transform: uppercase;
     text-align: center;
@@ -15,9 +19,12 @@
 }
 .grade-table-container td:last-child {
     text-align: right;
+<<<<<<< HEAD
 }
 
 .noGradeContainer {
     height: 10vh;
     width: 20vw;
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }

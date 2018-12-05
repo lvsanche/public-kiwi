@@ -34,16 +34,43 @@ class EditStudent extends Component {
 		this.handleReset = this.handleReset.bind(this);
 	}
 
+	componentWillUnmount(){
+		window.scrollTo(0,0);
+	}
+
 	handleFilterBarToggle() {
 		(this.state.filterMenuDisplay === 'none')
 		? this.setState({'filterMenuDisplay': 'flex'})
 		: this.setState({'filterMenuDisplay': 'none'})	
 	}
 
+<<<<<<< HEAD
 	handleGradeChange (assessmentID, value) {
 		const { grades } = this.state;
 
 		var newGrades;
+=======
+	handleGradeChange (assessmentID, standardID, value) {
+		const { assessments } = this.props;
+		const { gradeType } = assessments[standardID][assessmentID];
+		const { grades } = this.state;
+
+		var newGrades;
+
+		if ( gradeType === 'counting'){
+			var countDict = createWholeDict(value);
+			newGrades = Object.assign({}, grades, {
+				[assessmentID]: countDict
+			});
+		}
+		else{
+			newGrades = Object.assign({}, grades, {
+				[assessmentID]: value
+			});
+		}
+		
+		this.setState({grades: newGrades});
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 
 		newGrades = Object.assign({}, grades, {
 			[assessmentID]: value
@@ -93,8 +120,13 @@ class EditStudent extends Component {
 	componentWillMount() {
 		window.scrollTo(0,0);
 	}
+<<<<<<< HEAD
 	
 	componentWillUnmount() {
+=======
+
+	componentWillUpdate(){
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 		window.scrollTo(0,0);
 	}
 

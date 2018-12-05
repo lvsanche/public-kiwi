@@ -35,8 +35,8 @@ class StudentTile extends React.Component {
                         style={{display: display}}
                         onClick={closePopUp}
                         >
-                        <NavLink to={routes.STUDENT_STATS+'/'+studentID+'#top'}><i className="fas fa-chart-bar"></i></NavLink>
-                        <NavLink to={routes.EDIT_STUDENT+'/'+studentID+'#'}><i className="fas fa-edit"></i></NavLink>
+                        <NavLink to={routes.STUDENT_STATS+'/'+studentID+'#top'}><i className="fa fa-bar-chart" aria-hidden="true"></i></NavLink>
+                        <NavLink to={routes.EDIT_STUDENT+'/'+studentID+'#'}><i className="fa fa-pencil-square-o" aria-hidden="true"></i></NavLink>
                     </div> 
             </div>
         )

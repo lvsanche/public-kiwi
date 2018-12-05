@@ -19,6 +19,7 @@ class ConfirmNewClass extends Component {
 	}
 
     handleSubmit() {
+<<<<<<< HEAD
         const { newStandards, nClass, setUpAssessments,
           newStudents, history, clearTempAll, setClassID,
           addExistingStandard, addNewStudent } = this.props;
@@ -42,11 +43,25 @@ class ConfirmNewClass extends Component {
             standards.postNewStandard(standardID, nClass.classID, standardName, standardDetails, gradeType, subject)
             .then( () => {
                 addExistingStandard(newStandards[standardID]);
+=======
+        const { teacherName, newStandards, nClass, setUpAssessments,
+          newStudents, history, clearTempAll, setTeacherName, setClassID,
+          addExistingStandard, addNewStudent } = this.props;
+        
+        var standardObj = {};
+        Object.keys(newStandards).forEach( standardID => {
+            const { standardName, standardDetails, gradeType, subject} = newStandards[standardID];
+            standards.postNewStandard(standardID, nClass.id, standardName, standardDetails, gradeType, subject)
+            .then( () => {
+                addExistingStandard(newStandards[standardID]);
+                standardObj[standardID] = {};
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
             })
             .catch( error => console.log(error));
             });
         
         //time to use the standardObj
+<<<<<<< HEAD
         setUpAssessments(standardsObj);
 
         Object.keys(newStudents).forEach( studentID => {
@@ -54,12 +69,33 @@ class ConfirmNewClass extends Component {
           students.postNewStudent( studentID, firstName, lastName, nClass.classID )
           .then( () => {
             addNewStudent(studentID, firstName, lastName, nClass.classID);
+=======
+        setUpAssessments(standardObj);
+
+        Object.keys(newStudents).forEach( studentID => {
+          const {firstName, lastName} = newStudents[studentID];
+          students.postNewStudent( studentID, firstName, lastName, nClass.id )
+          .then( () => {
+            addNewStudent(studentID, firstName, lastName, nClass.id);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
           })
           .catch( error => console.log(error));
         });
 
 
+<<<<<<< HEAD
         
+=======
+        const { id, year, grade, schoolName, teacherID, standardList, studentList} = nClass;
+        classes.postNewClassWithStudentsAndStandards(id, teacherID, year, grade, schoolName, standardList, studentList)
+        .then( () => {
+          setTeacherName(teacherName);
+          setClassID(id);
+        })
+        .catch( error => console.log(error));
+        //empty the Temp Class, set the currentClass
+        users.postClassToUser(teacherID, id).catch(error => console.log(error));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
         
         clearTempAll();
         history.push(routes.DASHBOARD);

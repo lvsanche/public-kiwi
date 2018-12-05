@@ -1,5 +1,6 @@
 const expandToArray = (f, l) => { var x=[]; var i=l-f; while(x.push(f++) <=i) {} return x;};
 
+<<<<<<< HEAD
 export const isCountingStringValid = (inputStr) => {
     var isValid = true;
     var rawArray = inputStr.split(',').map( st => st.trim() );
@@ -27,6 +28,9 @@ export const isCountingStringValid = (inputStr) => {
 }
 
 export const makeDictFromCountingString = (inputStr) => {
+=======
+export const createWholeDict = (inputStr) => {
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     // console.log(inputStr);
     var rawArray = inputStr.split(',').map( st => st.trim() );
 
@@ -61,8 +65,28 @@ export const makeDictFromCountingString = (inputStr) => {
 };
 
 export const countingFromString = (inputStr) => {
+<<<<<<< HEAD
     const someDict = makeDictFromCountingString(inputStr);
     return Object.keys(someDict).length;
+=======
+    const someDict = createWholeDict(inputStr);
+    return Object.keys(someDict).length;
+}
+
+//////////////////////Helper Functions //////////////////
+//returns the assessmentID that was last taken
+export const findNewestAssessment = ( assessmentIDList, assessmentList ) => {
+    var recentID = assessmentList[assessmentIDList[0]].id;
+    var recentDate = new Date(assessmentList[assessmentIDList[0]].date);
+    for( var i=1; i < assessmentIDList.length; i++) {
+      var nD = new Date(assessmentList[assessmentIDList[i]].date);
+      if( nD.getTime() > recentDate.getTime() ){
+        recentID = assessmentIDList[i];
+        recentDate = nD;
+      }
+    }
+    return recentID;
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }
 
 ///////////////////////Bar formatter Helpers

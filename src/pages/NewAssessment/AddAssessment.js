@@ -42,8 +42,13 @@ class AddAssessment extends Component {
     const { addTempAssessment, history } = this.props;
     const { date, standardID, maxGrade, standardName } = this.state;
     
+<<<<<<< HEAD
     if ( date === '' || standardID === '' || maxGrade === '' ){
       this.setState({error: 'Missing date, standard, or grade'})
+=======
+    if ( date === '' || standardID === '' ){
+      this.setState({error: 'Missing date or Standard'})
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     }
     else {
       const newAssessment = addTempAssessment(date.toISOString().split('T')[0], standardID, maxGrade, standardName);
@@ -61,6 +66,7 @@ class AddAssessment extends Component {
       standardName: standard.standardName,
       subject: standard.subject,
       gradeType: standard.gradeType
+<<<<<<< HEAD
     });
 
     if( standard.gradeType === 'letterCounting' ){
@@ -68,12 +74,25 @@ class AddAssessment extends Component {
     }
     else if( standard.gradeType === 'counting'){
       this.setState({maxGrade: 20});
+=======
+    })
+
+    if( standard.gradeType === 'letterCounting' ){
+      this.setState(byPropKey('maxGrade', 27));
+    }
+    else if( standard.gradeType === 'counting'){
+      this.setState(byPropKey('maxGrade', 20));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     }
     event.preventDefault();
   }
 
   handleDateChange(date){
+<<<<<<< HEAD
     this.setState({date: date});
+=======
+    this.setState(byPropKey('date', date));
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
   }
 
   handleMaxGradeChange(value){

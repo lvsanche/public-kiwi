@@ -6,13 +6,21 @@ body {
 /*--------------------------------CONTAINERS*/
 
 /* APP CONTAINER*/
+<<<<<<< HEAD
 .content {
+=======
+.content{
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     margin-top: 5vh;
     display: flex;
 }
 
 /*CONTAINER STYLING*/
+<<<<<<< HEAD
 .container {
+=======
+.container{
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
     padding: 0 1em;
 }
 

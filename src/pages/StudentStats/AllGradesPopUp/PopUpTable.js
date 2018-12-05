@@ -4,7 +4,10 @@ import './PopUpGrades.css';
 const TableLine = ({standardName, date, latestGrade}) =>
     <tr>
          <td><a href={'#'+standardName}>{standardName}</a></td>
+<<<<<<< HEAD
          <td>{date}</td>
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
          <td>{latestGrade}</td>
     </tr>
 
@@ -56,7 +59,10 @@ const returnSimplifiedGrade = (grade, maxGrade) => {
                 percent = grade.length / maxGrade;
             }
             else{
+<<<<<<< HEAD
                 console.log('WE are in here pop up')
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                 percent = Object.keys(grade).filter(key => grade[key]).length / maxGrade;
             }
         }

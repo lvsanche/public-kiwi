@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import AssessmentCriteriaGraph from './AssessmentCriteriaGraph';
+<<<<<<< HEAD
 import {convertObjToArray, compareDateDescendingAssessments } from '../../../../services/dataFormatters/miscHelpers';
+=======
+import {convertObjToArray} from '../../../../services/dataFormatters/miscHelpers';
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 
 const INITIAL_STATE = {
     assessmentID: 'latest'
@@ -31,7 +35,11 @@ class InteractiveCriteriaGraph extends Component {
                       value={assessmentID} >
                         <option value='latest'>Latest</option>
                         {
+<<<<<<< HEAD
                             convertObjToArray(assessments[standard.standardID]).sort(compareDateDescendingAssessments).map(assessmentOptions)
+=======
+                            convertObjToArray(assessments[standard.standardID]).map(assessmentOptions)
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                         }
                     </select>
                     <AssessmentCriteriaGraph 

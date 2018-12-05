@@ -24,7 +24,11 @@ const mapDispatchToProps = {
   setClassID,
   setUpAssessments,
   addExistingStandard,
+<<<<<<< HEAD
   addNewStudent, 
+=======
+  addNewStudent,
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }
 
 const authCondition = (authUser) => !!authUser;

@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import './LandingPage.css';
 import withRouter from '../../../../node_modules/react-router-dom/withRouter';
 
+<<<<<<< HEAD
 class LandingPage extends React.Component {
     componentWillMount() {
         const { authUser, history}  = this.props;
@@ -78,6 +79,22 @@ class LandingPage extends React.Component {
                         <a href="mailto:luissanchez.1293@gmail.com"><i class="fas fa-envelope"></i> Email</a>
                         
                     </div>
+=======
+const LandingPage = () => (
+    <div className="card">
+        <div className="card-title">
+            <h2>Welcome!</h2>
+        </div>
+        <div className="card-content">
+            <div className="landingPage-content flex-container-cols">
+                <h1>Student Grade Tracking and Management made easy!</h1>
+                <p>A really nice landing page is low on the priority list</p>
+                <br />
+                <p> Visit <a href='https://github.com/lvsanche/public-kiwi'> Github</a> for more info </p>
+                <div className="landingPage-links flex-container">
+                    <NavLink className="btn-like" to={routes.SIGN_IN}>Sign In</NavLink>
+                    <NavLink className="btn-like" to={routes.SIGN_UP}>Sign Up</NavLink>
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                 </div>
             </div>
         )

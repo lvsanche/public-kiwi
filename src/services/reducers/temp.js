@@ -7,6 +7,11 @@ const tempClass = (state, action) => {
           grade: action.grade,
           schoolName: action.schoolName,
           teacherID: action.teacherID,
+<<<<<<< HEAD:src/services/reducers/temp.js
+=======
+          standardList: action.standards,
+          studentList: action.students,
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d:src/services/reducers/temp.js
         }
       case 'ADD_TEMP_STANDARD':
         return {

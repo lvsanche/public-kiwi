@@ -6,7 +6,11 @@ import { addExistingAssessment } from '../../services/actions/assessments';
 
 const mapStateToProps = ( state, ownProps ) => {
     return {
+<<<<<<< HEAD
         students: sortStudents(state.students),
+=======
+        students: state.students,
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
         assessment: state.temp.newAssessment,
         standard: state.standards[ state.temp.newAssessment.standardID ],
         classID: state.session.classID

@@ -20,6 +20,10 @@ const mapDispatchToProps = {
 
 const authCondition = (authUser) => !!authUser;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 const EditStudentContainer = withAuthorization(authCondition)(withRouter(connect(mapStateToProps, mapDispatchToProps)(EditStudent)));
 
 export default EditStudentContainer;

@@ -32,7 +32,11 @@ class InteractiveLetterGraph extends Component {
                       value={assessmentID} >
                         <option value='latest'>Latest</option>
                         {
+<<<<<<< HEAD
                             convertObjToArray(assessments[standard.standardID]).sort(compareDateDescendingAssessments).map(assessmentOptions)
+=======
+                            filterByStandard(standard.standardID, convertObjToArray(assessments)).map(assessmentOptions)
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                         }
                     </select>
                     <AssessmentLetterGraph 

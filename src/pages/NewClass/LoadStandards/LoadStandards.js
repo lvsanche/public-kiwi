@@ -39,11 +39,19 @@ class LoadStandards extends Component {
 		event.preventDefault();
 		allStandards.forEach( standard => {
 			const { standardName, gradeType, subject, standardDetails } = standard;
+<<<<<<< HEAD
 			addTempStandard(standardName,
 								classID,
 								gradeType,
 								subject,
 								standardDetails);
+=======
+			const newStandard = addTempStandard(standardName,
+								gradeType,
+								subject,
+								standardDetails);
+			updateTempClassStandards(newStandard.standardID);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 		});
 		this.setState({ ...INITIAL_STATE});
 		history.push(routes.ADD_STUDENTS);

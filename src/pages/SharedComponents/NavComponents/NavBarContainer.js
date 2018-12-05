@@ -34,9 +34,15 @@ const mapStateToProps = (state) => ({
   });
 
 const NavBarContainer = ({classID, students, teacherName, visible}) =>
+<<<<<<< HEAD
   (visible === null)? <div><TopContainerBar path="/"/></div> :
   <div>
       <TopContainerBar path="/dashboard" />
+=======
+  (visible === null)? <div><TopContainerBar/></div> :
+  <div>
+      <TopContainerBar />
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
       <NavBar teacherName={teacherName} links={generateNavbarLinks(classID, students)}/>
   </div>
 

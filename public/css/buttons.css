@@ -69,11 +69,14 @@ button:hover {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 .white-btn:hover {
     box-shadow: 0px 8px 30px 1px white, 2px 6px 60px 4px lightgray;
     cursor: pointer;
 }
 
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 /* LINKS STYLING */
 .link-container a {
     padding: 0.5em;
@@ -83,6 +86,7 @@ button:hover {
 .cancel-button a{
     text-decoration: none;
     color: white;
+<<<<<<< HEAD
 }
 
 /*Pressed buttons for letters */
@@ -106,4 +110,6 @@ button:hover {
 
 .notPressed {
     background-color: white;
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }

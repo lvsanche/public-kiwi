@@ -85,10 +85,13 @@ form {
     display: inline;
     font-size: 1em;
     margin-left: .5em;
+<<<<<<< HEAD
     margin: 0;
 }
 .checkboxInput > label:hover {
     cursor: pointer;
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }
 
 /*RADIO BTN STYLES*/
@@ -100,6 +103,7 @@ form {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /*Category Button Input*/
 .multi-button {
     display: flex;
@@ -107,17 +111,23 @@ form {
 }
 
 
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 /*Letter Input Container*/
 .letter-input-container {
     display: flex;
     flex-wrap: wrap;
+<<<<<<< HEAD
     justify-content: center;
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }
 /*LETTER INPUT STLYING*/
 .letter-items {
     display: flex;
     align-items: center;
     align-content: center;
+<<<<<<< HEAD
     margin: 0.25em;
     height: 2vh;
     border: 1px solid #ccc;
@@ -128,6 +138,11 @@ form {
 .letter-items:hover {
     background-color: #ccc;
 }
+=======
+    margin: 0.25em 0;
+    flex: 0 0 9%;
+}
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 .letter-items label{
     text-transform: uppercase;
     margin-right: 0.25em;
@@ -144,6 +159,7 @@ form {
 }
 .fileInput label {
     padding: 0.25em;
+<<<<<<< HEAD
 }
 
 /*Select options */
@@ -152,4 +168,6 @@ optgroup {
 }
 optgroup option{
     text-transform: none;
+=======
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 }

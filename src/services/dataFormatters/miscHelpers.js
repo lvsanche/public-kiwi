@@ -114,6 +114,7 @@ export const convertCriteriaGradeToNumber = ( maxGrade, grade ) =>{
           return 0;
       }
   }
+<<<<<<< HEAD
   else {
     return -1;
   }
@@ -155,4 +156,23 @@ export const letterIndexToChar = ( letterIndex ) => {
   else {
     return null;
   }
+=======
+};
+
+
+export const flattenAssessmentsStructure = ( assessments ) => {
+  // console.log(objArray);
+	var arrayOfStds = convertObjToArray(assessments);
+	var filteredArray = arrayOfStds.filter( obj => Object.keys(obj).length > 0 );
+	// console.log(filteredArray); //array of objects
+  
+  var allAssessments = [];
+  
+	filteredArray.forEach( obj => {
+		const arr = convertObjToArray(obj);
+		arr.forEach( assess => allAssessments.push(assess));
+  });
+  
+	return allAssessments;
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
 };

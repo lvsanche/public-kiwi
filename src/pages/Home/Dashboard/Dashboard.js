@@ -4,7 +4,11 @@ import WholeClassCriteriaGraph from './graphs/WholeClassCriteriaGraph';
 
 export const Dashboard = ({ classID, ...other}) => {
     if(classID === null){
+<<<<<<< HEAD
         return( <div className="card card-45">
+=======
+        return( <div className="card card-30">
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
                     <div className="card-title">
                         <h2>Next Step</h2>
                     </div>

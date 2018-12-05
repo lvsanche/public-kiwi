@@ -16,14 +16,23 @@ class EditGradeItem extends Component {
 
   handleChange( event ){
     this.setState({'grade': event.target.value});
+<<<<<<< HEAD
     const { onChange, assessment } = this.props;
     onChange(assessment.assessmentID, event.target.value);
+=======
+    const { onChange, assessment } =this.props;
+    onChange(assessment.assessmentID, assessment.standardID, event.target.value);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
   }
 
   handleModalSubmit( value ){
     this.setState({'grade': value});
     const { onChange, assessment } = this.props;
+<<<<<<< HEAD
     onChange(assessment.assessmentID,  value);
+=======
+    onChange(assessment.assessmentID, assessment.standardID, value);
+>>>>>>> 98ad0f66c03ec6d13485689bba55708e6d86d80d
   }
 
   render() {
