@@ -8,7 +8,7 @@ Any critique, suggestions, and improvements are welcomed.
 
 ## Live version
 
-Find it on https://project-kiwi-0123.firebaseapp.com
+Find it on https://kiwi.luissanchez.us
 
 ### Log In Information: 
 
