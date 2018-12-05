@@ -19,6 +19,9 @@ const options = (student) => {
         scaleLabel: {
           display: true,
           labelString: 'Numbers Known'
+        },
+        ticks: {
+          stepSize:1
         }
       }],
     },

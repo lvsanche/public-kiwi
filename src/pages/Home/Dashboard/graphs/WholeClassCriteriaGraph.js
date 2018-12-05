@@ -37,7 +37,7 @@ const WholeClassCriteriaGraph = ({ students, assessments, standards}) => {
 
     const totalStudents = Object.keys(students).length;
     const completeDataSet = wholeClassCriteriaDataSetFormatter(students, standards, assessments);
-
+    // console.log(completeDataSet);
     return ( <HorizontalBar data={completeDataSet} options={graphOptions(totalStudents)} />)
 }
 

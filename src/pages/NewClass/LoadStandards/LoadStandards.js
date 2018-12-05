@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import StandardItem from '../../SharedComponents/listItems/StandardItem';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import * as routes from '../../../constants/routes';
 
 const INITIAL_STATE = {
@@ -15,6 +15,7 @@ class LoadStandards extends Component {
 		this.handleOnChange = this.handleOnChange.bind(this);
 		this.onReaderLoad = this.onReaderLoad.bind(this);
 		this.handleOnConfirm = this.handleOnConfirm.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
 	}
 
 	handleOnChange(event){
@@ -30,24 +31,30 @@ class LoadStandards extends Component {
 				allStandards: objList['standards'],
 		});
 
-  }
+  	}
 
 	handleOnConfirm(event){
-		const { addTempStandard, updateTempClassStandards, history } = this.props;
+		const { addTempStandard, history, classID } = this.props;
 		const { allStandards } = this.state;
 		event.preventDefault();
 		allStandards.forEach( standard => {
-			const { standardName, assessmentType, subject, standardDetails } = standard;
-			const newStandard = addTempStandard(standardName,
-								assessmentType,
+			const { standardName, gradeType, subject, standardDetails } = standard;
+			addTempStandard(standardName,
+								classID,
+								gradeType,
 								subject,
 								standardDetails);
-			updateTempClassStandards(newStandard.id);
 		});
 		this.setState({ ...INITIAL_STATE});
 		history.push(routes.ADD_STUDENTS);
 	}
-	//TODO must send the ids into the class object that is the current one
+
+	handleCancel() {
+		this.setState({...INITIAL_STATE});
+		this.props.clearTempAll();
+		this.props.history.push(routes.DASHBOARD);
+	}
+	
 	render(){
 		if(this.state.fileLoaded) {
 			return(
@@ -73,7 +80,7 @@ class LoadStandards extends Component {
 						</table>
 						<div className="button-container footer">
 							<button className="" type="submit" onClick={this.handleOnConfirm}>Confirm</button>
-							<button className="btn-like cancel-button"><Link to='/'>Cancel</Link></button>
+							<button onClick={this.handleCancel} >Cancel</button>
 						</div>
 					</div>
 				</div>
@@ -81,7 +88,7 @@ class LoadStandards extends Component {
 		}
 		else {
 			return (
-				<div className="card">
+				<div className="card card-30">
 					<div className="card-title">
 						<h2>Load Standards</h2>
 					</div>

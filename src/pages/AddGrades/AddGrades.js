@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import * as routes from '../../constants/routes';
-import { students } from '../../services/api';
-import { createWholeDict } from '../../services/dataFormatters/miscFormatters';
+import { students, assessments } from '../../services/api';
 import TableBody from './components/TableBuilder';
 import ErrorBanner from '../SharedComponents/ErrorBanner';
+
 const INITIAL_STATE = {
     error: '',
     studentGrades: {}
@@ -17,40 +17,56 @@ class AddGrade extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    componentWillUnmount(){
+        window.scrollTo(0,0);
+        this.handleCancel();
     }
 
     handleChange( value, studentID){
         var currentGrades = {...this.state.studentGrades};
-        ( typeof value === 'string' )
-        ? currentGrades[studentID]= value
-        : currentGrades[studentID]= { ...value }
+        currentGrades[studentID] = ( typeof value === 'string' )
+        ? value
+        : { ...value }
 
         this.setState({
             studentGrades: currentGrades
         })
     }
+    
+    handleCancel() {
+        this.setState({...INITIAL_STATE});
+        this.props.clearTempAll();
+        this.props.history.push(routes.DASHBOARD);
+    }
 
     handleSubmit(){
-        const { addGradesStudent, assessment, history } = this.props;
+        const { addGradesStudent, assessment, history, 
+             classID, addExistingAssessment, clearTempAll } = this.props;
         var { studentGrades } = this.state;
         
         var numEmptyGrades = Object.keys(studentGrades)
             .filter(studentID => studentGrades[studentID] === "");
         
         if ( numEmptyGrades.length === 0){
-            if ( assessment.gradingType === 'counting' ){
-                Object.keys(studentGrades).forEach(studentID => {
-                    studentGrades[studentID] = createWholeDict(studentGrades[studentID])
-                });
-            }
     
             Object.keys(studentGrades).forEach(
               studentID => {
-                  addGradesStudent(studentID, assessment.id, studentGrades[studentID])
-                  students.doSetStudentGrades(studentID, assessment.id, studentGrades[studentID])
+                  addGradesStudent(studentID, assessment.assessmentID, studentGrades[studentID])
+                  students.postStudentGrade(studentID, classID, assessment.assessmentID, studentGrades[studentID])
                   .catch(error => console.log(error))
                 }
             );
+
+            //add assessment locally and also post it 
+            addExistingAssessment(assessment);
+            assessments.postNewAssessment(assessment.assessmentID, assessment.standardID, 
+                assessment.standardName, assessment.maxGrade, assessment.date, classID).catch( error => console.log(error));
+            
+            clearTempAll();
+
             history.push(routes.DASHBOARD);
         }
         else{
@@ -60,10 +76,9 @@ class AddGrade extends Component {
     }
 
     componentWillMount(){
-        const { students, assessment } = this.props;
+        const { students, assessment} = this.props;
         //prep list depending on gradingType
         const curGrades = this.state.studentGrades;
-
         (assessment.maxGrade === '+') ?
             Object.keys(students).forEach( id => curGrades[id] = '-')
         :
@@ -73,11 +88,11 @@ class AddGrade extends Component {
     }
 
     render() {
-        const { assessment } = this.props;
+        const { standard, assessment } = this.props;
         const {studentGrades, error} = this.state;
         // console.log(this.state)
         return (
-            <div className="table-container card">
+            <div className="table-container card margin-le">
                 <div className="card-title">
                     <h2>Enter Grades</h2>
                 </div>
@@ -91,12 +106,14 @@ class AddGrade extends Component {
                             </tr>
                         </thead>
                         <TableBody
-                            assessment={assessment} 
+                            assessment={assessment}
+                            standard={standard}
                             studentGrades={studentGrades} 
                             handleChange={this.handleChange}/>
                     </table>
                     <div className="button-container">
                         <button onClick={ this.handleSubmit }>Submit Grades</button>
+                        <button onClick={this.handleCancel }>Cancel</button>
                     </div>
                 </div>
                 

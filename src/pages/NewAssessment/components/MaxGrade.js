@@ -27,14 +27,14 @@ class MaxGrade extends Component {
 
     render(){
         const {criteriaNum, maxGrade} = this.state;
-        const { gradingType } = this.props;
-        if(gradingType === 'criteria'){
+        const { gradeType } = this.props;
+        if(gradeType === 'criteria'){
             const maxNum = (criteriaNum) ? <MaxGradeNum value={maxGrade} handleGradeChange={this.handleGradeChange} />
             : null ;
             return (
                 <div>
                     <div className="checkboxInput">
-                        <input type="checkbox" value='false' onChange={this.handleCheckMark}/><label> Use '+', '~', '-' for grade </label> 
+                        <input id="check" type="checkbox" value='false' onChange={this.handleCheckMark}/><label htmlFor="check"> Use '+', '~', '-' for grade </label> 
                     </div>
                     {maxNum}
                 </div>   

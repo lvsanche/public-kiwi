@@ -1,68 +1,52 @@
-import { findNewestAssessment, countingLabelMaker, randomBarColorMaker } from './miscFormatters';
-import { compareDateAscendingAssessments, getAssessmentArrayByStandard} from './miscHelpers';
+import { makeDictFromCountingString, countingLabelMaker, randomBarColorMaker, countingFromString  } from './miscFormatters';
+import { compareDateAscendingAssessments, convertObjToArray, compareDateDescendingAssessments} from './miscHelpers';
 
 export const computeLatestDataSetFromCountingStandard = (student, standard, assessments) => {
-  const { standardName } = standard;
-  const standardID = standard.id;
+    const assessmentsFromStandard = assessments[standard.standardID]; //obj with assessment ID as key
+    const assessStdArray = convertObjToArray(assessmentsFromStandard);
 
-  const countArray = getAssessmentArrayByStandard(assessments,standardID);
-  const assessmentIDList = countArray.map( assessment => assessment.id)
-  //get the latest of the assessments
-  var latestCountID;
-  var dataSet = randomBarColorMaker('Numbers Known');
-  var labels;
-  var data;
-  var maxNum;
-  var title;
+    var dataSet = randomBarColorMaker('Numbers Known');
+    var labels;
+    var data;
+    var maxNum = 20; //max counting number
+    var title;
 
-  if( assessmentIDList.length >= 1){
-    latestCountID = findNewestAssessment(assessmentIDList, assessments);
-    const latestCount = student.grades[latestCountID];
-    if ( typeof latestCount === 'undefined'){
-      dataSet['data'] = [];
-      maxNum = 20;
-      title = 'Grade not found for student';
-      labels = countingLabelMaker(maxNum);
-
-      data = {
+    if( assessStdArray.length === 0 ){
+        dataSet['data'] = [];
+        title = 'No assessments for '+ standard.standardName +' were found';
+        labels = countingLabelMaker(maxNum);
+        data = {
         'datasets': [dataSet],
         'labels' : labels
-      };
+        };
+    }
+    else {
+        assessStdArray.sort(compareDateDescendingAssessments);
+        const latestAssess = assessStdArray[0];
+        const countingDict = makeDictFromCountingString(student.grades[latestAssess.assessmentID]);
+        dataSet['data'] = computeDataFromCountingDict(countingDict);
+        title = "Counting for "+ standard.standardName + " was last assessed on "  + latestAssess.date;
+        labels = countingLabelMaker(maxNum);
+        data = {
+            'datasets': [dataSet],
+            'labels' : labels
+        };
+    }
 
-    }
-    else{
-      title = "Counting for "+ standardName + " was last assessed on "  + assessments[latestCountID].date;
-      dataSet['data'] = computeDataFromCountingAsssessment(student, latestCountID);
-      labels = countingLabelMaker(dataSet['data'].length - 1);
-      data = {
-        'datasets': [dataSet],
-        'labels' : labels
-      }
-    }
-  }
-  else{
-    dataSet['data'] = [];
-    maxNum = 20;
-    title = 'No assessments for '+ standardName+' were found';
-    labels = countingLabelMaker(maxNum);
-    data = {
-      'datasets': [dataSet],
-      'labels' : labels
+    return {
+        maxNum: maxNum,
+        data: data,
+        title: title
     };
-  }
-
-  return {
-    maxNum: maxNum,
-    data: data,
-    title: title
-  };
-
 };
+
 
 //standard needed for title and other details
 export const computeDataSetFromCountingAssessment = ( student, standard, assessment ) => {
   var dataSet = randomBarColorMaker('Numbers Known');
-  dataSet['data']  = computeDataFromCountingAsssessment(student, assessment.id);
+
+  const countingGrade = student.grades[assessment.assessmentID];
+  dataSet['data']  = computeDataFromCountingDict(makeDictFromCountingString(countingGrade));
 
   const maxNum = dataSet['data'].length -1;
   
@@ -82,30 +66,23 @@ export const computeDataSetFromCountingAssessment = ( student, standard, assessm
   };
 };
 
-
-//data set returned is an array of 0,1 for which index is the number that is known or not
-const computeDataFromCountingAsssessment = ( student, assessmentID ) => {
-  //get obj with grade from student
-  const countingGrade = student.grades[assessmentID];
-  const knownNumbers = Object.keys(countingGrade).map(parseFloat);
-  const maxNum = Math.max(...knownNumbers);
-  var countArray = new Array(maxNum+1).fill(0);
-  knownNumbers.forEach( num => {
-    countArray[num] = 1;
-  });
-  return countArray;
-} ;
+const computeDataFromCountingDict = ( countingGrade ) => {
+    //get obj with grade from student
+    const knownNumbers = Object.keys(countingGrade).map(parseFloat);
+    const maxNum = Math.max(...knownNumbers);
+    var countArray = new Array(maxNum+1).fill(0);
+    knownNumbers.forEach( num => {
+      countArray[num] = 1;
+    });
+    return countArray;
+  } ;
 
 
 
 export const computeProgressDataSetsFromCountingStandard = ( student, standard, assessments ) => {
-  const assessmentsArray = Object.keys(assessments).map( (asID) => {
-    return assessments[asID]
-  });
-
   //need assessmentIDList and list of assessments
   //place to optimize
-  const countArray = assessmentsArray.filter( assess => assess.standardID === standard.id);
+  const countArray = convertObjToArray(assessments[standard.standardID]);
 
   var sortedAssessments = countArray.sort(compareDateAscendingAssessments);
 
@@ -114,9 +91,11 @@ export const computeProgressDataSetsFromCountingStandard = ( student, standard, 
   var data = [];
   sortedAssessments.forEach( assessment => {
     labels.push(assessment.date);
-    data.push(Object.keys(student.grades[assessment.id]).length);
-     //data.push(student.grades[assessment.id]);
-    // where we need to count the number they know data.push(student.grades[assessment.id] / maxGrade );
+    //need to count the size of the input
+    
+    data.push(countingFromString(student.grades[assessment.assessmentID]));
+     //data.push(student.grades[assessment.assessmentID]);
+    // where we need to count the number they know data.push(student.grades[assessment.assessmentID] / maxGrade );
   });
 
   //depending of grading Type the graph might be different

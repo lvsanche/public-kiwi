@@ -7,7 +7,7 @@ class EditStandard extends Component {
     super(props);
     this.state = {
       standardName: props.assignment.standardName,
-      assessmentType: props.assignment.assessmentType,
+      gradeType: props.assignment.gradeType,
       subject: props.assignment.subject,
       standardDetails: props.assignment.standardDetails,
     }
@@ -23,8 +23,8 @@ class EditStandard extends Component {
       case "standardName":
         this.setState({standardName: target.value});
         break;
-      case "assessmentType":
-        this.setState({assessmentType: target.value});
+      case "gradeType":
+        this.setState({gradeType: target.value});
         break;
       case "subject":
         this.setState({subject: target.value});
@@ -40,9 +40,9 @@ class EditStandard extends Component {
   handleSubmit(event){
     event.preventDefault();
     // (id, name, scoreType, maxGrade, subject, description)
-    this.props.editStandard(this.props.standard.id,
+    this.props.editStandard(this.props.standard.standardID,
       this.state.standardName,
-      this.state.assessmentType,
+      this.state.gradeType,
       this.state.subject,
       this.state.standardDetails);
 
@@ -65,7 +65,7 @@ class EditStandard extends Component {
           <br />
           <label>
             Standard Type
-            <select name="assessmentType" value={this.state.assessmentType} onChange={this.handleChange}>
+            <select name="gradeType" value={this.state.gradeType} onChange={this.handleChange}>
               <option value="criteria">Criteria</option>
               <option value="letterCount"> Counting Letters </option>
             </select>

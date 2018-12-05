@@ -1,14 +1,12 @@
 import React from 'react';
-import NavBarContainer from './SharedComponents/NavComponents/NavBarContainer';
 import Main from './Main';
-import TopContainerBar from './SharedComponents/NavComponents/TopContainer';
+import NavBarContainer from './SharedComponents/NavComponents/NavBarContainer';
 
 const App = () => (
   <div className="appContainer">
-    <TopContainerBar/>
     <div className="content">
       <NavBarContainer/>
-      <Main />
+      <Main/>
     </div>
   </div>
 );

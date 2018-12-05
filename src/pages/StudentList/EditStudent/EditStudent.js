@@ -2,28 +2,28 @@ import React, {Component} from 'react';
 import EditGradeItem from './EditGradeItem';
 import * as routes from '../../../constants/routes';
 import { students } from '../../../services/api';
-import { createWholeDict } from '../../../services/dataFormatters/miscFormatters';
 import SortFilterBar from './SortFilterBar';
 import { filterAssessments} from '../../../services/dataFormatters/filterBy';
 import { sortAssessments } from '../../../services/dataFormatters/sortBy';
+import ErrorBanner from '../../SharedComponents/ErrorBanner';
 
 const INITIAL_STATE = {
 	filterMenuDisplay: 'none', 
 	sortBy: 'dateAscending',
 	filters: {
 		subject: 'all',
-		gradingType: 'all',
+		gradeType: 'all',
 		searchText: '',
 	},
-	grades: {}
+	grades: {},
+	error: ''
 }
 
 class EditStudent extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-				...INITIAL_STATE,
-				student: props.students[props.match.params.uuid],
+				...INITIAL_STATE
 			}
 		this.handleFilterBarToggle = this.handleFilterBarToggle.bind(this);
 		this.handleGradeChange = this.handleGradeChange.bind(this);
@@ -36,28 +36,20 @@ class EditStudent extends Component {
 
 	handleFilterBarToggle() {
 		(this.state.filterMenuDisplay === 'none')
-		? this.setState({'filterMenuDisplay': 'block'})
+		? this.setState({'filterMenuDisplay': 'flex'})
 		: this.setState({'filterMenuDisplay': 'none'})	
 	}
-	handleGradeChange (id, value) {
-		const { assessments } = this.props;
-		const { gradingType } = assessments[id];
-		const { grades } = this.state;
-		var newGrades;
-		if ( gradingType === 'counting'){
-			var countDict = createWholeDict(value);
-			newGrades = Object.assign({},grades, {
-				[id]: countDict
-			});
-		}
-		else{
-			newGrades = Object.assign({}, grades, {
-				[id]: value
-			});
-		}
-		
-		this.setState({grades: newGrades});
 
+	handleGradeChange (assessmentID, value) {
+		const { grades } = this.state;
+
+		var newGrades;
+
+		newGrades = Object.assign({}, grades, {
+			[assessmentID]: value
+		});
+
+		this.setState({grades: newGrades});
 	}
 
 	handleReset(){
@@ -71,15 +63,17 @@ class EditStudent extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		const { history, addGradesStudent } = this.props;
-		const { student, grades } = this.state;
+		const { history, addGradesStudent, student } = this.props;
+		const { grades } = this.state;
 
-		const newStudentGrades = Object.assign({}, student.grades, grades); 
 		Object.keys(grades).forEach( assessmentID => {
-			addGradesStudent(student.id,assessmentID, grades[assessmentID])
+			students.postStudentGrade(student.studentID, student.classID, assessmentID,
+				grades[assessmentID]).catch(e => console.log(e));
+
+			addGradesStudent(student.studentID, assessmentID, grades[assessmentID]);
 		});
-		students.doSetAllStudentGrades(student.id, newStudentGrades).catch(e=>console.log(e));
-		history.push(routes.STUDENTS_LIST);
+
+		history.push(routes.STUDENT_STATS+'/'+student.studentID);
 	}
 
 	handleSortChange(value){
@@ -96,37 +90,20 @@ class EditStudent extends Component {
 		});
 	}
 
-	tableBodyCreator = (filters, assessments, sortBy, student) => {
-		var toDisplay = 
-			<tr>
-				<td><p className='errorText'>No matching results found</p></td><td></td><td></td>
-			</tr>
+	componentWillMount() {
+		window.scrollTo(0,0);
+	}
 	
-		if(Object.keys(assessments).length > 0){
-			const filteredArray = filterAssessments(filters, assessments);
-			if( filteredArray.length > 0 ){
-				toDisplay = sortAssessments(sortBy, filteredArray)
-				.map( 
-					assessment => ( 
-						<EditGradeItem 
-							key={assessment.id} 
-							grade={student.grades[assessment.id]} 
-							onChange={this.handleGradeChange} 
-							assessment={assessment} 
-							/>)
-				);
-			}
-			
-		}
-		return toDisplay;
-	};
+	componentWillUnmount() {
+		window.scrollTo(0,0);
+	}
 
 	render(){
-		const { assessments } = this.props;
-		const { student, sortBy, filters } = this.state;
+		const { assessments, standards, student} = this.props;
 
-		var toDisplay = this.tableBodyCreator(filters, assessments, sortBy, student);
-		
+		const { sortBy, filters, error } = this.state;
+		// var toDisplay = this.tableBodyCreator(filters, assessments, standards, sortBy, student);
+		// console.log(student);
 		return(
 			<div className="card table-container">
 				<div className="card-title">
@@ -141,26 +118,33 @@ class EditStudent extends Component {
 					handleFilterBarToggle={this.handleFilterBarToggle}
 					display={this.state.filterMenuDisplay}
 					/>
-				<table className="default-table">
-					<thead>
-						<tr>
-							<th>Standard Evaluated</th>
-							<th>Date of assessment</th>
-							<th>Current Grade</th>
-						</tr>
-					</thead>
-					<tbody>
-						{	
-							toDisplay
-						}
-					</tbody>
+				{error && <ErrorBanner error={error}/>}
+				<div className="container card-content">
+					<table className="default-table grade-input-table">
+						<thead>
+							<tr>
+								<th>Standard Evaluated</th>
+								<th>Date of assessment</th>
+								<th>Current Grade</th>
+							</tr>
+						</thead>
+						<tbody>
+							<TableBody
+								filters={filters}
+								assessments={assessments}
+								standards={standards}
+								sortBy={sortBy}
+								student={student}
+								handleGradeChange={this.handleGradeChange}
+							/>
 
-				</table>
-			
-			<div className="button-container">
-				<button onClick={this.handleSubmit}>Save Grades</button>
-				<button onClick={this.handleCancel}>Cancel</button>
-			</div>
+						</tbody>
+					</table>
+				</div>
+				<div className="button-container">
+					<button onClick={this.handleSubmit}>Save Grades</button>
+					<button onClick={this.handleCancel}>Cancel</button>
+				</div>
 				
 			</div>
 		)
@@ -168,7 +152,31 @@ class EditStudent extends Component {
 }
 
 
+const TableBody = ({filters, assessments, standards, sortBy, student, handleGradeChange}) => {
+	var toDisplay = 
+		<tr>
+			<td></td><td></td><td></td>
+		</tr>
+		
+	
+	const filteredArray = filterAssessments(filters, assessments, standards);
+	// console.log(filteredArray);
+	if( filteredArray.length > 0 ){
+		toDisplay = sortAssessments(sortBy, filteredArray)
+		.map( 
+			assessment => ( 
+				<EditGradeItem 
+					key={assessment.assessmentID+student.studentID} 
+					grade={student.grades[assessment.assessmentID]} 
+					onChange={handleGradeChange} 
+					assessment={assessment}
+					standard={standards[assessment.standardID]} 
+					/>)
+		);
+	}
 
+	return toDisplay;
+};
 
 
 export default EditStudent;

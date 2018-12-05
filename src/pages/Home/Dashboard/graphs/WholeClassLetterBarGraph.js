@@ -36,7 +36,7 @@ const WholeClassLetterBarGraph = ({ students, assessments, standards}) => {
 
     const totalStudents = Object.keys(students).length;
     const completeDataSet = wholeClassBarDataFormatter(students, standards, assessments);
-
+    // console.log(completeDataSet);
     return ( <HorizontalBar data={completeDataSet} options={graphOptions(totalStudents)} />)
 }
 

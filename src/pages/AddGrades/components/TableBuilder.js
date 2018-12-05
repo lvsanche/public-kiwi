@@ -3,14 +3,14 @@ import CriteriaBody from './CriteriaTableBody';
 import CountBody from './CountingTableBody';
 import LetterBody from './LetterTableBody';
 
-const TableBody = ({assessment, ...other}) => {
-    if( assessment.gradingType === 'criteria'){
-        return <CriteriaBody assessment={assessment} {...other} />
+const TableBody = ({standard, ...other}) => {
+    if( standard.gradeType === 'criteria'){
+        return <CriteriaBody {...other} />
     }
-    else if ( assessment.gradingType === 'counting' ){
+    else if ( standard.gradeType === 'counting' ){
         return <CountBody {...other} />
     }
-    else if ( assessment.gradingType === 'letterCounting'){
+    else if ( standard.gradeType === 'letterCounting'){
         return <LetterBody {...other} />
     }
     else{

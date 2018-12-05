@@ -1,0 +1,16 @@
+.graph-container {
+    padding: 3em 2em;
+    margin: 2em 0;
+    width: 90%;
+    height: 100vh;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    background-color: #fff;
+}
+.graph-container canvas {
+    width: 100%!important;
+    height: 100%!important;
+}
+
+.dashboard-container {
+    width: 100%;
+}

@@ -5,9 +5,9 @@ import { Dashboard } from './Dashboard';
 
 const mapStateToProps = (state) => {
     return {
-        authUser: state.sessionState.authUser,
-        username: state.sessionState.userName,
-        currentClass: state.sessionState.currentClass,
+        authUser: state.session.authUser,
+        teacherName: state.session.teacherName,
+        classID: state.session.classID,
         students: state.students,
         assessments: state.assessments,
         standards: state.standards

@@ -7,7 +7,7 @@ import withAuthorization from '../../SharedComponents/auth/withAuthorization';
 const mapStateToProps = (state, ownProps) => {
   return {
     standard: state.standards[ownProps.match.params.uuid],
-    authUser: state.sessionState.authUser
+    authUser: state.session.authUser
   }
 }
 

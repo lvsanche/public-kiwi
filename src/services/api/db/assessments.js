@@ -1,15 +1,17 @@
 import { db } from '../firebase';
 
-export const doCreateAssessment = (date, assessmentID, gradingType, maxGrade, standardID, standardName, subject ) =>
-  db.ref(`assessments/${assessmentID}`).set({
+export const postNewAssessment = 
+  (assessmentID, standardID, standardName, maxGrade, date, classID) =>
+  db.ref(`assessments/${classID}/${standardID}/${assessmentID}`).set({
     assessmentID,
     standardID,
     standardName,
-    subject,
-    gradingType,
-    date,
-    maxGrade
+    maxGrade,
+    date
   });
 
-export const onceGetAssessment = (assessmentID) =>
-db.ref(`assessments/${assessmentID}`).once('value');
+export const singleGetAssessment = (standardID, assessmentID, classID) =>
+  db.ref(`assessments/${classID}/${standardID}/${assessmentID}`).once('value');
+
+export const getAllAssessments = ( classID ) => 
+  db.ref(`assessments/${classID}`).once('value');

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { assessments, classes } from '../../services/api';
 import * as routes from '../../constants/routes';
 import MaxGrade from './components/MaxGrade';
 import CancelButton from '../SharedComponents/NavComponents/CancelButton';
@@ -11,16 +10,12 @@ import ErrorBanner from '../SharedComponents/ErrorBanner';
 const INITIAL_STATE = {
   date: '',
   standardID: '',
-  gradingType: '',
+  gradeType: '',
   maxGrade: '',
   subject: '',
   standardName: '',
   error: null,
 };
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
 
 class AddAssessment extends Component {
   constructor (props) {
@@ -38,24 +33,21 @@ class AddAssessment extends Component {
     this.setState({...INITIAL_STATE});
   }
 
+  componentWillUnmount(){
+    this.handleCancel();
+  }
+
   handleSubmit(event){
     event.preventDefault();
-    const { addAssessment, classID, history } = this.props;
-    const { date, standardID, gradingType, maxGrade, standardName, subject } = this.state;
-
-    if ( date === '' || standardID === '' ){
-      this.setState({error: 'Missing date or Standard'})
+    const { addTempAssessment, history } = this.props;
+    const { date, standardID, maxGrade, standardName } = this.state;
+    
+    if ( date === '' || standardID === '' || maxGrade === '' ){
+      this.setState({error: 'Missing date, standard, or grade'})
     }
     else {
-      const newAssessment = addAssessment(date, standardID, gradingType, maxGrade, standardName, subject);
-    
-      assessments.doCreateAssessment(date, newAssessment.id, gradingType, maxGrade, standardID, standardName, subject)
-      .catch( error => console.log(error) );
-      
-      classes.doAppendAssessment(classID, newAssessment.id)
-      .catch( error => console.log(error) );
-      
-      history.push(routes.ADD_GRADES+'/'+newAssessment.id);
+      const newAssessment = addTempAssessment(date.toISOString().split('T')[0], standardID, maxGrade, standardName);
+      history.push(routes.ADD_GRADES+'/'+newAssessment.assessmentID);
     }
 
   }
@@ -63,34 +55,35 @@ class AddAssessment extends Component {
   handleStandardChange(event){
     const { standards } = this.props;
     const standard = standards[event.target.value];
+    
     this.setState( {
-      standardID: event.target.value,
+      standardID: standard.standardID,
       standardName: standard.standardName,
       subject: standard.subject,
-      gradingType: standard.assessmentType
-    })
+      gradeType: standard.gradeType
+    });
 
-    if( standard.assessmentType === 'letterCounting' ){
-      this.setState(byPropKey('maxGrade', 27));
+    if( standard.gradeType === 'letterCounting' ){
+      this.setState({maxGrade: 27});
     }
-    else if( standard.assessmentType === 'counting'){
-      this.setState(byPropKey('maxGrade', 20));
+    else if( standard.gradeType === 'counting'){
+      this.setState({maxGrade: 20});
     }
     event.preventDefault();
   }
 
-  handleDateChange(value){
-    this.setState(byPropKey('date', value));
+  handleDateChange(date){
+    this.setState({date: date});
   }
 
   handleMaxGradeChange(value){
-    this.setState(byPropKey('maxGrade', value));
+    this.setState({maxGrade: value});
   }
 
   render(){
     const { date,
             standardID,
-            gradingType,
+            gradeType,
             error
           } = this.state;
 
@@ -114,14 +107,13 @@ class AddAssessment extends Component {
             standards={standards}
             />
           <MaxGrade
-            gradingType={gradingType}
+            gradeType={gradeType}
             handleMaxGrade={this.handleMaxGradeChange}
             />
           <div className="button-container">
             <button type="submit">Add Assessment</button>
             <CancelButton handleCancel={this.handleCancel} />
           </div>
-          
         </form>
       </div>
     )

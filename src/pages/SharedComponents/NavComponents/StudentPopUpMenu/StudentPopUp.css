@@ -1,0 +1,69 @@
+.studentTile NavLink {
+    display: 'none';
+}
+
+.studentTileContainer {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12), 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    flex-direction: column;
+    width: 50vw;
+    height: 50vh;
+    background-color: white;
+    margin: -72px 0  0 15vw;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.studentTile {
+    position: relative;
+    z-index: inherit;
+    border-radius: 5px;
+    padding: 0;
+    box-sizing: border-box;
+}
+.studentTile p {
+    position: relative;
+    z-index: inherit;
+    padding: 0.25em;
+}
+.studentTile p:hover {
+    background-color: #5e4955;
+    color: white;
+}
+
+.tileButtonContainer {
+    align-items: center;
+    z-index: inherit;
+    position: absolute;
+    background-color: rgba(204,204,204,0.5);
+    justify-content: center;
+    top:0;
+    height: 100%;
+    width: 100%;
+}
+.tileButtonContainer a {
+    z-index: inherit;
+    position: relative;
+    font-size: 1.5vh;
+    padding: 0.5em;
+    background: #ccc;
+    color: black;
+    border-radius: 50vh;
+    margin: 0 1vw;
+}
+.tileButtonContainer a:hover{
+    font-size: 2.5vh;
+    z-index: 2;
+    color: black;
+    background-color: #40798C;
+}
+
+@media screen and (max-height: 630px) {
+    .studentTileContainer {
+        width: 82vw;
+        margin: -50vh 0  0 15vw;
+    }
+}

@@ -5,7 +5,7 @@ const classroom = (state, action) => {
           id: action.id,
           year: action.year,
           grade: action.grade,
-          school: action.school
+          schoolName: action.schoolName
         }
       default:
         return state;

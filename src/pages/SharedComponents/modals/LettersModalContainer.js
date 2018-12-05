@@ -2,14 +2,14 @@ import React, {Component } from 'react';
 import LettersModal from './LettersModal';
 
 const INITIAL_STATE = {
-    letters: {
-      a: false, b: false, c: false,d: false,e: false,
-      f: false,g: false,h: false,i: false,j: false,
-      k: false,l: false,m: false,n: false,ñ: false,
-      o: false,p: false,q: false,r: false,s: false,
-      t: false,u: false,v: false,w: false,x: false,
-      y: false,z: false,
-    },
+    letters: [ 
+        false, false, false, false, false,
+        false, false, false, false, false,
+        false, false, false, false, false,
+        false, false, false, false, false,
+        false, false, false, false, false,
+        false, false
+    ],
     display: 'none',
     buttonColor: '#40798C'
   };
@@ -30,6 +30,7 @@ class LetterCounter extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLetterToggle = this.handleLetterToggle.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     toggleModal(){
@@ -37,20 +38,52 @@ class LetterCounter extends Component {
                         ? 'block'
                         : 'none';
         this.setState({display: display, buttonColor: '#ccc'});
+        //Will add event listener for keyboard input
+        if( display === 'block'){
+            window.addEventListener('keydown', this.handleKeyPress);
+        }
+        else {
+            window.removeEventListener('keydown', this.handleKeyPress);
+        }
+        
     }
 
-    handleModalChange( letter, value) {
+    /**
+     * Summary. Will take the keydown event and toggle the modal's 
+     * letter
+     * @param {event} event It is a keyboard event we are listening for
+     */
+    handleKeyPress(event){
+        //means we toggle the letter and we get the index from key code
+        //index must account for the ene index
+        var letterIndex = event.keyCode;
+        if( letterIndex <= 90 && letterIndex >= 65){
+            if ( letterIndex > 78){
+                //must increment amount for ene
+                letterIndex+=1;
+            }
+            letterIndex-=65;
+            this.handleModalChange(letterIndex);
+        }
+    }
+
+    handleModalChange( letterIndex ) {
         const { letters } = this.state;
+        var newLets = letters.slice();
+        newLets[letterIndex] = !newLets[letterIndex];
         this.setState({
-          'letters': {...letters, [letter]: !JSON.parse(value)}
+          letters: newLets
         });
     }
+
     handleLetterToggle() {
         const { letters } = this.state;
-        var toggled = {};
-        Object.keys(letters).forEach( letter => toggled[letter] = !letters[letter])
-        this.setState({letters: toggled});
+        var toggled = letters.map( letter => !letter)
+        this.setState({
+            letters: toggled
+        });
     }
+
     handleSubmit(){
         const { onModalSubmit, studentID, grades} = this.props;
         const { letters } = this.state;
@@ -84,5 +117,6 @@ class LetterCounter extends Component {
         )
     }
 }
+
 
 export default LetterCounter;

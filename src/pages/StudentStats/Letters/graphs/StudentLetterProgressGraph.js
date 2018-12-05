@@ -21,9 +21,9 @@ const options = (student, standardName) => {
           labelString: 'Level of Application'
         },
         ticks: {
-          max: 27,
-          min: 0,
-          stepSize:1
+        //   max: 27,
+        //   min: 0,
+          stepSize: 1
         }
       }]
     }
@@ -32,7 +32,7 @@ const options = (student, standardName) => {
 
 
 const StudentLetterProgressGraph = ( {student, standard, assessments } ) => {
-  const dataSet = computeProgressDataSetsFromLetterStandard(student, standard, assessments);
+  const dataSet = computeProgressDataSetsFromLetterStandard(student, standard.standardID, assessments);
   return (
     <Line data={dataSet} options={options(student, standard.standardName)}/>
   )

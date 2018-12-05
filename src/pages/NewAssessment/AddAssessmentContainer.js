@@ -1,19 +1,19 @@
 import AddAssessment from './AddAssessment';
 import { connect } from 'react-redux';
-import { addAssessment } from '../../services/actions/assessments';
+import { addTempAssessment } from '../../services/actions/temp';
 import { compose } from 'recompose';
 import withAuthorization from '../SharedComponents/auth/withAuthorization';
 
 const mapStateToProps = (state) =>{
 	return {
-		authUser: state.sessionState.authUser,
+		authUser: state.session.authUser,
 		standards: state.standards,
-		classID: state.sessionState.currentClass
+		classID: state.session.classID
 	}
 }
 
 const mapDispatchToProps = {
-	addAssessment
+	addTempAssessment
 }
 
 const authCondition = (authUser) => !!authUser;

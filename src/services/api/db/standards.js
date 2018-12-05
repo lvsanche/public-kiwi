@@ -1,22 +1,18 @@
 import { db } from '../firebase';
 
-export const doCreateStandard = (uid, standardID, standardName, standardDetails, assessmentType, subject ) =>
-  db.ref(`standards/${standardID}`).set({
+export const postNewStandard = 
+  (standardID, classID, standardName, standardDetails, gradeType, subject ) =>
+  db.ref(`standards/${classID}/${standardID}`).set({
     standardID,
+    classID,
     standardName,
     standardDetails,
-    assessmentType,
-    subject,
-    'availableTo': { [uid]: true }
+    gradeType,
+    subject
   });
 
-export const doEditStandard = ( standardID, standardName, standardDetails, assessmentType, subject ) =>
-  db.ref(`standards/${standardID}`).set({
-    standardName,
-    standardDetails,
-    assessmentType,
-    subject,
-  });
+export const getAllStandards = ( classID ) => 
+  db.ref(`standards/${classID}`).once('value');
 
-export const onceGetStandard = (standardID) =>
-  db.ref(`standards/${standardID}`).once('value');
+export const singleGetStandard = (standardID, classID) =>
+  db.ref(`standards/${classID}/${standardID}`).once('value');

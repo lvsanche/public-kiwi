@@ -1,20 +1,27 @@
-import { findNewestAssessment, randomBarColorMaker, barColorSelector } from "../miscFormatters";
+import { barColorSelector } from "../miscFormatters";
+import { convertObjToArray } from "../miscHelpers";
+import { filterIDsByGradeType } from '../filterBy';
+import { compareDateDescendingAssessments } from '../miscHelpers'; 
+// import { graphData } from '../../api/db';
 
 //method returns a complete data set
 export const wholeClassBarDataFormatter = (studentList, standards, assessments ) => {
     //first get the standards that have to do with Letters
-    const letStds = Object.keys(standards).filter(
-      stdID => standards[stdID].assessmentType === 'letterCounting' );
+    const letterStandards = convertObjToArray(standards)
+    const filteredStandardIDs = filterIDsByGradeType('letterCounting', letterStandards);
 
-    const students = Object.keys(studentList).map( id => studentList[id]);
-    const arrayOfDataSets = letStds.map( (stdID, index) =>
-      computeWholeClassLatestDataSetFromLetterStandard(assessments, students, stdID, standards[stdID].standardName, index)
-    );
+    const students = convertObjToArray(studentList);
+    const arrayOfDataSets = filteredStandardIDs.map( (standardID, index) => {
+      var datasetPerStd = computeWholeClassLatestDataSetFromLetterStandard(assessments[standardID], students, standards[standardID].standardName, index+3) // changing color scheme
+      // graphData.postLetterGraphDataset(datasetPerStd, standardID).catch( e => console.log(e) );
+      
+      return datasetPerStd;
+    });
 
     // Now all the counters are in an array
     const alphabetLabels = [
       'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-      'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z'
+      'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
     ];
 
     const completeDataSet = {
@@ -25,19 +32,23 @@ export const wholeClassBarDataFormatter = (studentList, standards, assessments )
     return completeDataSet;
 };
 
-//students is an array of student objects
-const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students, standardID, standardName, color) => {
-    //getting array of assessments of matching standard
-    const assessmentIDs = Object.keys(assessments).filter(
-      (asID) => assessments[asID].standardID === standardID );
+export const updateLetterGraphDatasets = (newAssessment, lastAssessment ) => {
+  //first check if the new change in the assessment is 
+  if ( newAssessment.date > lastAssessment.date ){
+    
+  }
+}; 
 
+//students is an array of student objects
+const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students, standardName, color) => {
+    //getting array of assessments of matching standard
+    const assessmentsArray = convertObjToArray(assessments);
+    var sortedAssessArray = assessmentsArray.sort( compareDateDescendingAssessments);
     //find the latest of the assessment if more than one exists
+
     var newestAssess;
-    if ( assessmentIDs.length > 1){
-      newestAssess = findNewestAssessment(assessmentIDs, assessments);
-    }
-    else if( assessmentIDs.length === 1){
-      newestAssess = assessmentIDs[0];
+    if ( sortedAssessArray.length > 0){
+      newestAssess = sortedAssessArray[0];
     }
     else{
       //must have 0 data
@@ -46,20 +57,18 @@ const computeWholeClassLatestDataSetFromLetterStandard = (assessments, students,
       return emptyDataSet;
     }
 
-    //long loop here will be 3X slow
-    //continue with newestAssess
-    var counter = { a: 0, b:0, c:0, d:0, e:0, 
-      f:0, g:0, h:0, i:0, j:0, k:0, l:0, m:0,
-      n:0, o:0, p:0, q:0, r:0, s:0, t:0, u:0,
-      v:0, w:0, x:0, y:0, z:0, ñ:0 };
+    
+    var counter = new Array(27).fill(0);  
 
     students.forEach( (student) => {
-      var letters = student.grades[newestAssess]; //letters obj
-      for ( var letter in letters){
-        if ( letters[letter]){
-          counter[letter]+=1;
+      var letters = convertObjToArray(student.grades[newestAssess.assessmentID]); //letters obj
+      letters.forEach(
+        (value, index) => {
+            if ( value ){
+              counter[index]+=1;
+            }
         }
-      }
+      )
     });
 
     var dataSet = barColorSelector(standardName, color);

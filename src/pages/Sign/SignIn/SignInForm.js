@@ -4,7 +4,7 @@ import * as routes from '../../../constants/routes';
 import GenericTextInput from '../../SharedComponents/input/GenericTextInput';
 import ErrorBanner from '../../SharedComponents/ErrorBanner';
 import PasswordInput from '../../SharedComponents/input/PasswordInput';
-
+import { withRouter } from 'react-router-dom';
 
 const INITIAL_STATE = {
     email: '',
@@ -60,10 +60,9 @@ class SignInForm extends Component {
   
     render() {
         const { email, password, error} = this.state;
-  
         return (
           <div className="form-container">
-              <form onSubmit={event => event.preventDefault()}>
+              <form onSubmit={this.handleSubmit}>
                   <ErrorBanner error={error}/>
                   <GenericTextInput
                       labelText={'Email Address'}
@@ -74,10 +73,10 @@ class SignInForm extends Component {
                       handleChange={this.handlePasswordChange}
                       value={password}
                   />
+                  <div className="button-container flex-container">
+                      <button type="submit">Sign In</button>
+                  </div>
               </form>
-              <div className="button-container flex-container">
-                      <button onClick={this.handleSubmit} type="submit">Sign In</button>
-              </div>
           </div>
             
         
@@ -85,4 +84,4 @@ class SignInForm extends Component {
     }
   }
 
-  export default SignInForm;
+  export default withRouter(SignInForm);

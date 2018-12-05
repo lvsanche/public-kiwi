@@ -1,7 +1,6 @@
-export const setUser = (firstName, lastName) => ({
-    type: 'SET_USER',
-    firstName,
-    lastName
+export const setTeacherName = (firstName, lastName) => ({
+    type: 'SET_TEACHER_NAME',
+    teacherName: firstName + ' ' + lastName
   });
   
 export const setAuthUser = (authUser) => ({
@@ -9,11 +8,10 @@ export const setAuthUser = (authUser) => ({
   authUser
 });
 
-export const setCurrentClass = ( currentClass ) => ({
-  type: 'SET_CURRENT_CLASS',
-  currentClass
+export const setClassID = ( classID ) => ({
+  type: 'SET_CLASS_ID',
+  classID
 })
-
 
 export const clearStandards = () => ({
   type: 'CLEAR_STANDARDS',

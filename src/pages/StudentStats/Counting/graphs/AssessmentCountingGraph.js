@@ -43,7 +43,7 @@ const AssessmentCountingGraph = ({student, assessmentID, assessments, standard})
   
   const { data, title, maxNum } = (assessmentID === 'latest')
     ? computeLatestDataSetFromCountingStandard(student, standard, assessments)
-    : computeDataSetFromCountingAssessment(student, standard, assessments[assessmentID]);
+    : computeDataSetFromCountingAssessment(student, standard, assessments[standard.standardID][assessmentID]);
 
 
   return(

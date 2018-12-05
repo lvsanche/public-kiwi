@@ -1,21 +1,19 @@
 import { randomBarColorMaker } from "./miscFormatters";
 import { convertObjToArray, convertCriteriaGradeToNumber,
     compareDateDescendingAssessments, compareDateAscendingAssessments } from "./miscHelpers";
-import { filterByStandard } from "./filterBy";
 
 
 export const computeProgressDataSetsFromCriteriaStandard = (student, standard, assessments) => {
-    const assessmentArray = convertObjToArray(assessments);
-    const standardArray = filterByStandard(standard.id, assessmentArray);
-
+    const assessmentsFromStandard = assessments[standard.standardID];
+    const standardArray = convertObjToArray(assessmentsFromStandard);
+    
     var sortedAssessments = standardArray.sort(compareDateAscendingAssessments);
-
     var labels = [];
     var data = [];
+
     sortedAssessments.forEach( assessment => {
-        const { date, maxGrade, id } = assessment;
-        const grade = student.grades[id];
-        
+        const { date, maxGrade, assessmentID } = assessment;
+        const grade = student.grades[assessmentID];
         var gradeVal = convertCriteriaGradeToNumber(maxGrade, grade);
         
         labels.push(date);
@@ -36,14 +34,16 @@ export const computeProgressDataSetsFromCriteriaStandard = (student, standard, a
           }
         ]
       }
+    
     return dataSet;
 }
 
 export const computeLatestDataSetFromCriteriaStandard = (student, standard, assessments) => {
     //find the correct assessment and call computeDataSetFromCriteriaAssessment
     //get assessments of the same standard
-    const assessmentArray = convertObjToArray(assessments);
-    var sortedAssessArray = filterByStandard(standard.id, assessmentArray).sort( compareDateDescendingAssessments);
+    const assessmentArray = convertObjToArray(assessments[standard.standardID]);
+    var sortedAssessArray = assessmentArray.sort( compareDateDescendingAssessments);
+
     if( sortedAssessArray.length > 0){
         return computeDataSetFromCriteriaAssessment( student, sortedAssessArray[0]);
     }
@@ -63,8 +63,8 @@ export const computeLatestDataSetFromCriteriaStandard = (student, standard, asse
 
 export const computeDataSetFromCriteriaAssessment = (student, assessment) => {
     //find if the maxGrade is number or + }
-    const { maxGrade, standardName, id } = assessment;
-    const grade = student.grades[id]
+    const { maxGrade, standardName, assessmentID } = assessment;
+    const grade = student.grades[assessmentID]
     var dataSet = randomBarColorMaker(standardName);
     dataSet['data'] = [convertCriteriaGradeToNumber(maxGrade, grade)]
 

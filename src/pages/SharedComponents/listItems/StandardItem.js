@@ -1,9 +1,9 @@
 import React from 'react';
 
-const StandardItem = ({id, standardName, assessmentType, subject}) => (
+const StandardItem = ({standardName, gradeType, subject}) => (
     <tr>
       <td>{standardName}</td>
-      <td>{assessmentType}</td>
+      <td>{gradeType}</td>
       <td>{subject}</td>
     </tr>
 );

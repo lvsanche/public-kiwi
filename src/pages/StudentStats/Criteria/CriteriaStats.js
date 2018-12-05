@@ -3,14 +3,17 @@ import StudentCriteriaProgressGraph from "./graphs/StudentCriteriaProgressGraphC
 import InteractiveCriteriaGraph from "./graphs/InteractiveCriteriaGraph";
 
 const CriteriaStandardStats = ({student, assessments, standard} ) => 
-    <div>
-        <h4 id={standard.standardName}>{standard.standardName}</h4>
-        <section className='leftStats'>
-            <StudentCriteriaProgressGraph student={student} assessments={assessments} standard={standard}/>
-        </section>
-        <section className='rightStats'>
-            <InteractiveCriteriaGraph student={student} assessments={assessments} standard={standard} />
-        </section>
+    <div className="standardSection">
+        <div className="linkAnchor"><span id={standard.standardName}></span></div>
+        <h4>{standard.standardName}</h4>
+        <div className="graphSection">
+            <section className="statGraphContainer">
+                <StudentCriteriaProgressGraph student={student} assessments={assessments} standard={standard}/>
+            </section>
+            <section className="statGraphContainer">
+                <InteractiveCriteriaGraph student={student} assessments={assessments} standard={standard} />
+            </section>
+        </div>
     </div>
 
 export default CriteriaStandardStats;

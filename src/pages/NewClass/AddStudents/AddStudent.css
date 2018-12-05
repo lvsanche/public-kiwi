@@ -1,0 +1,20 @@
+.studentRow {
+    display: flex;
+    flex-direction: row;
+}
+.studentRow > td > label {
+    position: relative;
+    left: -0.75em;
+}
+
+.studentRow td{
+    display: flex;
+    
+}
+
+.studentRow button {
+    font-size: 0.5em;
+    margin: 1em 0 0 0.25em;
+    height: 2em;
+
+}

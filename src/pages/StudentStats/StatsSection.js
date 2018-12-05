@@ -1,47 +1,53 @@
 import React from 'react';
-import { filterBySubject, filterByAssessmentType } from '../../services/dataFormatters/filterBy';
+import { filterBySubject, filterByGradeType } from '../../services/dataFormatters/filterBy';
 import { convertObjToArray } from '../../services/dataFormatters/miscHelpers';
 import CountingStandardStats from './Counting/CountingStats';
 import CriteriaStandardStats from './Criteria/CriteriaStats';
 import LetterStandardStats from './Letters/LetterStats';
+
 const StatsSection = ({student, standards, assessments, subject}) => {
     const standardArray = convertObjToArray(standards);
     var subjectArray = filterBySubject(subject, standardArray);
-    var countingStandards = filterByAssessmentType('counting', subjectArray);
-    var criteriaStandards = filterByAssessmentType('criteria', subjectArray);
-    var letterStandards = filterByAssessmentType('letterCounting', subjectArray);
+
+    var countingStandards = filterByGradeType('counting', subjectArray);
+    var criteriaStandards = filterByGradeType('criteria', subjectArray);
+    var letterStandards = filterByGradeType('letterCounting', subjectArray);
     return (
-        <div>
-            <h3>{subject}</h3>
+        <div className="subjectSection">
+            <div className="card-title"><h2>{subject}</h2></div>
             {
-                countingStandards.map( std =>
+                countingStandards.map( standard =>
                     <CountingStandardStats
-                                key={std.id}
-								student={student}
-								assessments={assessments}
-                                standard={std}/>
+                                key={standard.standardID}
+                                student={student}
+                                assessments={assessments}
+                                standard={standard}/>
                             )
             }
             {
-                criteriaStandards.map( std =>
+                criteriaStandards.map( standard =>
                     <CriteriaStandardStats
-                                key={std.id}
+                                key={standard.standardID}
                                 student={student}
                                 assessments={assessments}
-                                standard={std}/>
+                                standard={standard}/>
                             )
             }
             {
-                letterStandards.map( std =>
+                letterStandards.map( standard =>
                     <LetterStandardStats
-                                key={std.id}
+                                key={standard.standardID}
                                 student={student}
                                 assessments={assessments}
-                                standard={std}/>
+                                standard={standard}/>
                             )
             }
+
+            
         </div>
     )
 }
 
+
+            
 export default StatsSection;

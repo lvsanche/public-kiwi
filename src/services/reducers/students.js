@@ -11,10 +11,10 @@ const student = (state, action) => {
       )
     case 'ADD_STUDENT':
       return {
-        id: action.id,
+        studentID: action.studentID,
         firstName: action.firstName,
         lastName: action.lastName,
-        currentClass: action.currentClass,
+        classID: action.classID,
         grades: action.grades
       }
     default:
@@ -34,7 +34,7 @@ const students = (state = {}, action) => {
       )
     case 'ADD_STUDENT':
       return Object.assign({}, state, {
-      [action.id]: student(state[action.id], action)
+      [action.studentID]: student(state[action.studentID], action)
     })
     default:
       return state;

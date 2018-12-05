@@ -1,7 +1,8 @@
 import React from 'react';
-const TopContainerBar = () =>
+import { NavLink } from 'react-router-dom';
+const TopContainerBar = ({path}) =>
     <div className="topbar">
-        <span className="logo">SMS</span>
+        <NavLink className="logo" to={path}>SMS</NavLink>
     </div>
 
 export default TopContainerBar;

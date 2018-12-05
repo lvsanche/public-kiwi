@@ -1,4 +1,5 @@
 import React from 'react';
+import { letterIndexToChar } from '../../../services/dataFormatters/miscHelpers';
 
 const LettersModal = ({ studentName, letters, display, handleLetterToggle, handleChange, handleSubmit, toggleModal, buttonColor}) => 
     <div>
@@ -11,13 +12,16 @@ const LettersModal = ({ studentName, letters, display, handleLetterToggle, handl
                 </div>
                 <div className="letter-input-container container">
                     { 
-                        Object.keys(letters).map( 
-                            letter => <SingleLetter key={letter} 
+                        letters.map( 
+                            (letter, index) => <SingleLetterBtn key={index} 
                                         student={studentName}
-                                        letter={letter} 
-                                        value={letters[letter]}
+                                        letterIndex={index} 
+                                        value={letter}
                                         handleChange={handleChange} />) 
                     }
+                </div>
+                <div>
+                    <label>Letters known: {lettersKnown(letters)}/{letters.length}</label>
                 </div>
                 <div className="button-container">
                     <button onClick={handleSubmit}>Save Grade</button>
@@ -27,17 +31,20 @@ const LettersModal = ({ studentName, letters, display, handleLetterToggle, handl
             </div>
         </div>
     </div>
-    
-   
 
-const SingleLetter = ({letter, value, handleChange, student}) => 
-    <div className='letter-items'>
-        <label htmlFor={student+"letterRecognition"+letter}>{letter}</label>
-        <input type="radio"
-            onClick={event => handleChange(letter, event.target.value)}
-            name={student+"letterRecognition"+letter}
-            id={student+"letterRecognition"+letter}
-            value={value} checked={value===true}/>
+const lettersKnown = (letters) => {
+    return letters.filter( l => l).length;
+}
+
+const SingleLetterBtn = ({letterIndex, value, handleChange, student}) => 
+    <div className="letterButtonContainer">
+        <button
+            type="button"
+            onClick={event => handleChange(letterIndex)}
+            id={student+"letterRecognition"+letterIndex}
+            value={value}
+            className={ (value === true)? 'letterButton pressed' : 'letterButton notPressed' }
+        > {letterIndexToChar(letterIndex)}</button>
     </div>
 
 export default LettersModal;

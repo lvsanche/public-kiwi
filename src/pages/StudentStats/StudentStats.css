@@ -1,40 +1,78 @@
-.leftStats {
-    float:left;
-    width: 50%;
-}
-.rightStats {
-    float: right;
-    width: 50%;
+.statPage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.statSection {
-    border: 2px solid blue;
-    overflow: hidden;
+.statsPageHeader {
+    margin: 1em 0 0;
+    box-sizing: border-box;
+    padding: 0.5em;
+    display: block;
+    width: 90%;
+    text-align: center;
+    background: #757780;
+    font-size: 4em;
+    font-weight: 700;
+    color: white;
+}
+
+.subjectSection h2{
+    text-transform: uppercase;
+    font-size: 3em;
+}
+
+.subjectSection {
+    margin: 2em 0;
+    background-color: white;
+    width: 90%;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.graphSection{
+    background-color: rgba(220, 220, 220, 0.3 );
+    width: 100%;
+    display: flex;
 }
 .standardSection {
-    border: 1px  dashed red;
+    margin: 1em 0.5em;
+}
+.standardSection h4{
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: bolder;
+    text-align: center;
+}
+.standardSection .linkAnchor {
+    position: relative;
+}
+.standardSection span {
+    position: absolute;
+    top: -5vh;
 }
 
-.container {
-    overflow: hidden;
-  }
+.statGraphContainer {
+    flex: 1;
+    width: 49%;
+    margin: 0.25em;
+    padding: 0.25em;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
 
 .popUpBtn {
     position: fixed;
-    top: 200px;
+    top: 4em;
     right: 0;
 }
 
 .popUp {
     position: fixed;
-    top: 240px;
+    top: 8.5em;
     right: 0;
     background-color: #f1f1f1;
-    width: 300px;
-    border: 3px solid #73AD21;
+    /* width: 300px; */
     min-width: 160px;
-    height: 400px;
-    overflow-y: scroll;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12), 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }

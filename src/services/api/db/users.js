@@ -1,18 +1,21 @@
 import { db } from '../firebase';
 
-export const doCreateUser = (id, firstName, lastName, email) =>
-  db.ref(`users/${id}`).set({
+export const postNewUser = (userID, firstName, lastName, email) =>
+  db.ref(`users/${userID}`).set({
+    userID,
     firstName,
     lastName,
-    email,
-    'classes' : {}
+    email
   });
 
-export const doAddClassToUser = (id, classID) =>
-  db.ref(`users/${id}/classes/${classID}`).set(true);
+export const postClassToUser = (userID, classID) =>
+  db.ref(`users/${userID}/classes/${classID}`).set(true);
 
-export const onceGetUserInfo = (id) =>
-  db.ref(`users/${id}`).once('value');
+export const postCurrentClassToUser = (userID, classID) => 
+  db.ref(`users/${userID}/currentClass`).set(classID);
 
-export const onceGetUsers = () =>
+export const singleGetUserInfo = (userID) =>
+  db.ref(`users/${userID}`).once('value');
+
+export const singleGetAllUsers = () =>
   db.ref('users').once('value');

@@ -33,12 +33,11 @@ class LoadStudents extends Component {
 
 	handleOnConfirm(event){
 		const { students } = this.state;
-		const { addTempStudent, updateTempClassStudents, history } = this.props;
+		const { addTempStudent, history } = this.props;
 
 		students.forEach( student => {
 			const {fname, lname} = student;
-			const newStudent = addTempStudent(fname, lname);
-			updateTempClassStudents(newStudent.id);
+			addTempStudent(fname, lname);
 		});
 
 		this.setState({...INITIAL_STATE})

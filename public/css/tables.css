@@ -1,0 +1,58 @@
+/* TABLES */
+.table-container {
+    width: 70vw;    
+}
+
+.default-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    display: table;
+    margin: 2em 0;
+}
+
+.default-table thead {
+    color: #fff;
+    background-color: #000;
+}
+
+.default-table th:first-child,
+.default-table td:first-child {
+    padding-left: 1em;
+}
+
+.default-table td,
+.default-table th {
+    padding: 8px 8px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: top;
+}
+
+.default-table tbody tr:nth-child(even) {
+    background-color: #d3d3d3;
+}
+
+/*Enter Letter Grades Table*/
+.letterTable td,
+.categoryTable td {
+    vertical-align: middle;
+}
+.letterStudentName{
+    font-size: 2em;
+    padding: 1em 0 0;
+    vertical-align: center;
+}
+/*Category Grade Input Table*/
+.categoryStudentName {
+    font-size: 2em;
+    padding: 0;
+    vertical-align: center;
+}
+td > input {
+    width: 100%;
+}
+
+.readingTable td {
+    text-align: left;
+}

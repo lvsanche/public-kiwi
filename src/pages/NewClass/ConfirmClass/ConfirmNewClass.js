@@ -5,6 +5,7 @@ import StandardItem from '../../SharedComponents/listItems/StandardItem';
 import StudentItem from '../../SharedComponents/listItems/StudentItem';
 import { standards, students, classes, users } from '../../../services/api';
 import * as routes from '../../../constants/routes';
+
 class ConfirmNewClass extends Component {
 
     constructor(props){
@@ -13,39 +14,53 @@ class ConfirmNewClass extends Component {
       this.handleCancel = this.handleCancel.bind(this);
     }
 
+    componentWillMount() {
+		window.scrollTo(0,0);
+	}
+
     handleSubmit() {
-        const { teacherName, newStandards, authUser, nClass,
-          newStudents, history, clearTempAll, setUser, setCurrentClass,
-          addStandard, addStudent } = this.props;
-        Object.keys(newStandards).forEach( standardID => {
-          const {standardName, standardDetails, assessmentType, subject} = newStandards[standardID];
-          standards.doCreateStandard( authUser.uid, standardID, standardName, standardDetails, assessmentType, subject )
-          .then( () => {
-            addStandard(standardID, standardName, assessmentType, subject, standardDetails );
-          })
-          .catch( error => console.log(error));
-        });
+        const { newStandards, nClass, setUpAssessments,
+          newStudents, history, clearTempAll, setClassID,
+          addExistingStandard, addNewStudent } = this.props;
+        
 
-
-        Object.keys(newStudents).forEach( studentID => {
-          const {firstName, lastName} = newStudents[studentID];
-          students.doCreateNewStudent( studentID, firstName, lastName, nClass.id )
-          .then( () => {
-            addStudent(studentID, firstName, lastName, nClass.id);
-          })
-          .catch( error => console.log(error));
-        });
-
-
-        const { id, year, grade, school, teacher, standardList, studentList} = nClass;
-        classes.doCreateClassWithStudentsAndStandards(id, teacher, year, grade, school, standardList, studentList)
+        const { classID, year, grade, schoolName, teacherID} = nClass;
+        classes.postNewClass(classID, teacherID, year, grade, schoolName)
         .then( () => {
-          setUser(teacherName);
-          setCurrentClass(id);
+            setClassID(classID);
         })
         .catch( error => console.log(error));
         //empty the Temp Class, set the currentClass
-        users.doAddClassToUser(teacher, id).catch(error => console.log(error));
+        users.postClassToUser(teacherID, classID).catch(error => console.log(error));
+
+
+        var standardsObj = {};
+        Object.keys(newStandards).forEach( standardID => {
+            const { standardName, standardDetails, gradeType, subject} = newStandards[standardID];
+            standardsObj[standardID] = {};
+        
+            standards.postNewStandard(standardID, nClass.classID, standardName, standardDetails, gradeType, subject)
+            .then( () => {
+                addExistingStandard(newStandards[standardID]);
+            })
+            .catch( error => console.log(error));
+            });
+        
+        //time to use the standardObj
+        setUpAssessments(standardsObj);
+
+        Object.keys(newStudents).forEach( studentID => {
+          const {firstName, lastName} = newStudents[studentID];
+          students.postNewStudent( studentID, firstName, lastName, nClass.classID )
+          .then( () => {
+            addNewStudent(studentID, firstName, lastName, nClass.classID);
+          })
+          .catch( error => console.log(error));
+        });
+
+
+        
+        
         clearTempAll();
         history.push(routes.DASHBOARD);
     }
@@ -60,7 +75,7 @@ class ConfirmNewClass extends Component {
         const { nClass , newStudents, newStandards, teacherName  } = this.props;
         return (
             <div className="multi-card-container flex-container-cols">
-                <ClassItem {...nClass} username={teacherName} />
+                <ClassItem {...nClass} teacherName={teacherName} />
                 <StandardsTable standards={newStandards} />
                 <StudentsTable students={newStudents} />
                 <div className="button-container">
@@ -85,6 +100,7 @@ const StandardsTable = ({ standards } ) =>
            <h2>Standards</h2>
        </div>
        <div className="container">
+        <h3> Total # of Standards: {Object.keys(standards).length}</h3>
         <table className="default-table">
                 <thead>
                     <tr>
@@ -95,7 +111,7 @@ const StandardsTable = ({ standards } ) =>
                 </thead>
                 <tbody>
                 {
-                    Object.keys(standards).map( (standardKey,index) => ( <StandardItem key={index} { ...standards[standardKey]} />))
+                    Object.keys(standards).map( (standardID , index) => ( <StandardItem key={index} { ...standards[standardID]} />))
                 }
                 </tbody>
             </table>
@@ -109,6 +125,7 @@ const StudentsTable = ({ students }) =>
             <h2>Students</h2>
         </div>
         <div className="container">
+            <h3> Total # of Students: {Object.keys(students).length}</h3>
             <table className="default-table">
                 <thead>
                     <tr>
@@ -118,7 +135,7 @@ const StudentsTable = ({ students }) =>
                 </thead>
                 <tbody>
                 {
-                    Object.keys(students).map( (studentKey, index) => ( <StudentItem key={index} {...students[studentKey]} />))
+                    Object.keys(students).map( (studentKey, index) => ( <StudentItem key={index} index={index} {...students[studentKey]} />))
                 }
                 </tbody>
             </table>

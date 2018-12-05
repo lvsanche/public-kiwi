@@ -32,7 +32,7 @@ const StandardList = ({standards, onStandardClick}) => (
 
 const mapStateToProps = (state) => ({
   standards: state.standards,
-  authUser: state.sessionState.authUser
+  authUser: state.session.authUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

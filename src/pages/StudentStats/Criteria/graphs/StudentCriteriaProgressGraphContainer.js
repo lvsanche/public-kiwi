@@ -33,6 +33,7 @@ const options = (student, standardName) => {
 
 const StudentCriteriaProgressGraph = ( {student, standard, assessments } ) => {
   const dataSet = computeProgressDataSetsFromCriteriaStandard(student, standard, assessments);
+  
   return (
     <Line data={dataSet} options={options(student, standard.standardName)}/>
   )

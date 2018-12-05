@@ -1,22 +1,25 @@
 import { v4 } from 'node-uuid';
-export const addAssessment = ( date, standardID, gradingType, maxGrade, standardName, subject) => ({
+export const addNewAssessment = 
+    (date, standardID, maxGrade, standardName) => ({
     type: 'ADD_ASSESSMENT',
-    id: v4(),
+    assessmentID: v4(),
     date,
-    standardID,
-    gradingType,
     maxGrade,
-    standardName,
-    subject
+    standardID,
+    standardName
   });
   
-export const addExistingAssessment = ( id, date, standardID, gradingType, maxGrade, standardName, subject) => ({
+export const addExistingAssessment = 
+    ({ assessmentID, date, standardID, maxGrade, standardName }) => ({
     type: 'ADD_ASSESSMENT',
-    id,
+    assessmentID,
     date,
-    standardID,
-    gradingType,
     maxGrade,
-    standardName,
-    subject
+    standardID,
+    standardName
+});
+
+export const setUpAssessments = ( standardsObject ) => ({
+    type: 'SET_UP_ASSESSMENTS',
+    standardsObject
 });

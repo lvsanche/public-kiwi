@@ -20,6 +20,13 @@ import { computeDataSetFromLetterAssessment,
               min: 0,
               stepSize: 1
           }
+        }],
+        yAxes: [{
+          ticks: {
+              max: 1,
+              min: 0,
+              stepSize: 1
+          }
         }]
       }
     }
@@ -30,7 +37,7 @@ const AssessmentLetterGraph = ({student, assessmentID, assessments, standard}) =
 
   const { data } = (assessmentID === 'latest')
     ? computeLatestDataSetFromLetterStandard(student, standard, assessments)
-    : computeDataSetFromLetterAssessment(student, assessments[assessmentID]);
+    : computeDataSetFromLetterAssessment(student, assessments[standard.standardID][assessmentID]);
   return(
     <div>
       <Bar data={data} options={graphOptions()} />

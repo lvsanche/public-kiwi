@@ -30,7 +30,7 @@ class AddClass extends Component {
     handleSchoolChange(value){
         this.setState({'school': value})
     }
-
+    
     handleCancel(){
         const { clearTempAll, history } = this.props;
         this.setState({ ...INITIAL_STATE });
@@ -111,8 +111,8 @@ const GradeSelector = ({handleChange, value}) =>
         >
             <option value=''> </option>
             <option value='pre'> Preschool </option>
-            <option value='prek'> PreK </option>
-            <option value='K'> Kindergarden </option>
+            <option value='transk'> Transitional Kindergarten </option>
+            <option value='kinder'> Kindergarten </option>
             <option value='1st'> First Grade </option>
         </select>
     </div>

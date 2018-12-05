@@ -1,22 +1,21 @@
 import { randomBarColorMaker} from './miscFormatters';
 import { compareDateAscendingAssessments, compareDateDescendingAssessments, convertObjToArray } from './miscHelpers';
-import { filterByStandard } from './filterBy';
 
-export const computeProgressDataSetsFromLetterStandard = (student, standard, assessments) => {
-  const assessmentArray = convertObjToArray(assessments);
-  const standardArray = filterByStandard(standard.id, assessmentArray);
+export const computeProgressDataSetsFromLetterStandard = (student, standardID, assessments) => {
+  
+  const assessmentsArray = convertObjToArray( assessments[ standardID ])
 
-  var sortedAssessments = standardArray.sort(compareDateAscendingAssessments);
+  var sortedAssessments = assessmentsArray.sort(compareDateAscendingAssessments);
  
   var labels = [];
   var data = [];
   sortedAssessments.forEach( assessment => {
-      const { date, id } = assessment;
-      const grade = student.grades[id];
+      const { date, assessmentID } = assessment;
+      const grade = student.grades[assessmentID];
       labels.push(date);
       var countKnown = 0;
-      Object.keys(grade).forEach( letter => {
-        if( grade[letter]){
+      grade.forEach( known => {
+        if( known ){
           countKnown+=1;
         }
       })
@@ -43,13 +42,14 @@ export const computeProgressDataSetsFromLetterStandard = (student, standard, ass
 
 const alphabetLabels = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-  'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z'
+  'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
 export const computeLatestDataSetFromLetterStandard = (student, standard, assessments) => {
-  const assessmentArray = convertObjToArray(assessments);
-  const standardAssessArray = filterByStandard(standard.id, assessmentArray);
-  const sortedAssessments = standardAssessArray.sort(compareDateDescendingAssessments);
+
+  const assessmentArray = convertObjToArray( assessments[standard.standardID]);
+  const sortedAssessments = assessmentArray.sort(compareDateDescendingAssessments);
+
   if( sortedAssessments.length > 0 ){
     //return the latest
     return computeDataSetFromLetterAssessment( student, sortedAssessments[0]);
@@ -75,11 +75,11 @@ export const computeLatestDataSetFromLetterStandard = (student, standard, assess
 
 export const computeDataSetFromLetterAssessment = (student, assessment) => {
   //find if the maxGrade is number or + }
-  const { standardName, id } = assessment;
-  const grade = student.grades[id] // this is an object with letters as keys
+  const { standardName, assessmentID } = assessment;
+  const grade = student.grades[assessmentID] // this is an object with letters as keys
   var dataSet = randomBarColorMaker(standardName);
 
-  dataSet['data'] = convertLetterObjToData(grade);
+  dataSet['data'] = convertLetterArrayToData(grade);
 
   const data = {
       'datasets': [dataSet],
@@ -91,25 +91,15 @@ export const computeDataSetFromLetterAssessment = (student, assessment) => {
   }
 }
 
-const convertLetterObjToData = ( letters ) => {
-  const letterArray = Object.keys(letters).filter( letter => letters[letter] );
-  const maxNum = alphabetLabels.length;
-  var toRet = new Array(maxNum).fill(0);
-  //subtract the 65 for ascii 'a'
-  letterArray.forEach( letter => {
-    //must watch out of ene
-    var letterIndex = letter.charCodeAt(0) - 97; // lower case letters being used 
-    
-    if ( letterIndex >= 14 ){
-      toRet[letterIndex+1] = 1;
+const convertLetterArrayToData = ( letters ) => {
+  var toRet = letters.map( value => {
+    if( value ){
+      return 1;
     }
-    else if (letterIndex === 112) {
-      toRet[14] = 1;
-    } //special case
     else{
-      toRet[letterIndex] = 1;
+      return 0;
     }
-
   });
+  
   return toRet;
 };

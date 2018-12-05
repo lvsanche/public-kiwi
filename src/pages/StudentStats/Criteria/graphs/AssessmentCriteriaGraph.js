@@ -31,7 +31,7 @@ const AssessmentCriteriaGraph = ({student, assessmentID, assessments, standard})
 
     const {data, date } = (assessmentID === 'latest') ? 
       computeLatestDataSetFromCriteriaStandard(student, standard, assessments)
-      : computeDataSetFromCriteriaAssessment(student, assessments[assessmentID]) ;
+      : computeDataSetFromCriteriaAssessment(student, assessments[standard.standardID][assessmentID]) ;
     
     return(
         <div>

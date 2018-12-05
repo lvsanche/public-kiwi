@@ -5,6 +5,7 @@ import * as students from './db/students';
 import * as users from './db/users';
 import * as classes from './db/classes';
 import * as assessments from './db/assessments';
+import * as graphData from './db/graphData';
 
 export {
   auth,
@@ -14,4 +15,5 @@ export {
   classes,
   assessments,
   firebase,
+  graphData,
 };

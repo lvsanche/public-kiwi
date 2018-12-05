@@ -1,8 +1,8 @@
 import { v4 } from 'node-uuid';
-export const addClass = ( year, grade, school ) => ({
+export const addNewClass = ( year, grade, schoolName ) => ({
     type: 'ADD_CLASS',
-    id: v4(),
+    classID: v4(),
     year,
     grade,
-    school,
+    schoolName,
   });

@@ -2,25 +2,24 @@ const tempClass = (state, action) => {
     switch (action.type) {
       case 'ADD_TEMP_CLASS':
         return {
-          id: action.id,
+          classID: action.classID,
           year: action.year,
           grade: action.grade,
-          school: action.school,
-          teacher: action.userID,
-          standardList: action.standards,
-          studentList: action.students,
+          schoolName: action.schoolName,
+          teacherID: action.teacherID,
         }
       case 'ADD_TEMP_STANDARD':
         return {
-            id: action.id,
+            standardID: action.standardID,
+            classID: action.classID,
             standardName: action.standardName,
-            assessmentType: action.assessmentType,
+            gradeType: action.gradeType,
             subject: action.subject,
             standardDetails: action.standardDetails
         }
       case 'ADD_TEMP_STUDENT':
         return {
-            id: action.id,
+            studentID: action.studentID,
             firstName: action.firstName,
             lastName: action.lastName,
             grades: action.grades
@@ -30,26 +29,41 @@ const tempClass = (state, action) => {
     }
   };
 
+const tempAssessment = (state, action) => {
+    switch (action.type) {
+      case 'ADD_TEMP_ASSESSMENT':
+        return {
+            assessmentID: action.assessmentID,
+            standardID: action.standardID,
+            standardName: action.standardName,
+            maxGrade: action.maxGrade,
+            date: action.date
+        }
+      default:
+        return state;
+    }
+  }
+
 const createTempDict = (state, action) => {
   switch (action.type) {
     case 'ADD_TEMP_STANDARD':
       return Object.assign({}, state['newStandards'], {
-      [action.id]: tempClass(state[action.id], action)
+      [action.standardID]: tempClass(state[action.standardID], action)
       })
     case 'ADD_TEMP_STUDENT':
       return Object.assign({}, state['newStudents'], {
-        [action.id]: tempClass(state[action.id], action)
+        [action.studentID]: tempClass(state[action.studentID], action)
         })
     case 'UPDATE_CLASS_STANDARDS':
       return Object.assign({}, state, {
         standardList:  Object.assign({}, state['standardList'], {
-          [action.id]: true
+          [action.standardID]: true
         })
       })
     case 'UPDATE_CLASS_STUDENTS':
       return Object.assign({}, state, {
         studentList:  Object.assign({}, state['studentList'], {
-          [action.id]: true
+          [action.studentID]: true
         })
       })
     default:
@@ -57,7 +71,7 @@ const createTempDict = (state, action) => {
   }
 }
 
-const tempNewClasses = (state = {}, action) => {
+const temp = (state = {}, action) => {
     switch (action.type) {
       case 'ADD_TEMP_CLASS':
         return Object.assign({}, state, {
@@ -75,6 +89,10 @@ const tempNewClasses = (state = {}, action) => {
         return Object.assign({}, state, {
           newStudents: createTempDict(state, action)
           })
+      case 'ADD_TEMP_ASSESSMENT':
+        return Object.assign({}, state, {
+          newAssessment: tempAssessment(state, action)
+          })
       case 'UPDATE_CLASS_STUDENTS':
         return Object.assign({}, state, {
           newClass: createTempDict(state['newClass'], action)
@@ -86,4 +104,4 @@ const tempNewClasses = (state = {}, action) => {
     }
   };
 
-  export default tempNewClasses;
+  export default temp;

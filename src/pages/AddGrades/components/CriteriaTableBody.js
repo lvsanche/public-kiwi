@@ -28,7 +28,7 @@ const StudentCriteriaLineCat = ({studentName, onChange, value }) =>
     <tr className="categoryTable">
         <td className="categoryStudentName"> {studentName} </td>
         <td>
-            <CriteriaCategoryInput value={value} onChange={onChange} radioName={studentName} />
+            <CriteriaCategoryInput value={value} onChange={onChange} buttonName={studentName} />
         </td>
     </tr>
 

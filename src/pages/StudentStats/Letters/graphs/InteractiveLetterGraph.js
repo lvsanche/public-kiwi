@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AssessmentLetterGraph from './AssessmentLetterGraph';
 import {convertObjToArray} from '../../../../services/dataFormatters/miscHelpers';
-import { filterByStandard } from '../../../../services/dataFormatters/filterBy';
+import { compareDateDescendingAssessments } from '../../../../services/dataFormatters/miscHelpers';
 
 const INITIAL_STATE = {
     assessmentID: 'latest'
@@ -32,7 +32,7 @@ class InteractiveLetterGraph extends Component {
                       value={assessmentID} >
                         <option value='latest'>Latest</option>
                         {
-                            filterByStandard(standard.id, convertObjToArray(assessments)).map(assessmentOptions)
+                            convertObjToArray(assessments[standard.standardID]).sort(compareDateDescendingAssessments).map(assessmentOptions)
                         }
                     </select>
                     <AssessmentLetterGraph 
@@ -50,6 +50,6 @@ class InteractiveLetterGraph extends Component {
     }
 };
 
-const assessmentOptions = (assessment) => <option key={assessment.id} value={assessment.id} >{assessment.date} </option>
+const assessmentOptions = (assessment) => <option key={assessment.assessmentID} value={assessment.assessmentID} >{assessment.date} </option>
 
 export default InteractiveLetterGraph;

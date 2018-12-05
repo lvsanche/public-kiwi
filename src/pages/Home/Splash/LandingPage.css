@@ -1,20 +1,93 @@
+.landingPage-content {
+    width: 100%;
+}
 .landingPage-content h1 {
     font-size: 2em;
     padding: 0.5em;
-}
-
-.landingPage-content p {
-    display: block;
-}
-
-.landingPage-links {
-    padding: 1em;
+    text-align: center;
     width: 100%;
 }
+
 .landingPage-links a {
     padding: 0.5em;
     margin: 0 0.5em;
     text-decoration: none;
     font-weight: 600;
     text-align: center;
+}
+.hero-img {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.55)),url('../../../images/classroom.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 95vh;
+}
+
+.home-features {
+    padding: 2em 1em;
+    text-align: center;
+    max-width: 980px;
+    margin: auto;
+}
+.cols-two > p,
+.home-features > p {
+    margin: auto;
+    text-align: left;
+    line-height: 1.5;
+    font-size: 2em;
+    padding: 1em 0 1em 0.5em;
+}
+
+.cols-two > p {
+    width: 35vw;
+    min-width: 25vw;
+}
+.home-features h2 {
+    font-size: 4em;
+    padding: 0.5em 0;
+}
+.home-features h3 {
+    font-size: 3em;
+    font-weight: bolder;
+    padding: 0.5em 0;
+}
+.cols-two {
+    display: flex;
+    justify-content: space-between;
+}
+
+.captioned-image {
+    padding: 1em 0;
+}
+
+.captioned-image img {
+    width: 100%;
+    margin: 1em 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.hero-text {
+    text-align: center;
+    font-size: 4em;
+    color: white;
+    padding: 3em 0;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.home-footer {
+    background-color: #5e4955;
+    width: 100%;
+    min-height: 30vh;
+}
+
+.home-footer a {
+    font-size: 3em;
+    color: white;
+    text-align: center;
+    margin: 0.5em 0;
+    text-decoration: none;
 }

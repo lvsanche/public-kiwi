@@ -3,7 +3,7 @@ import * as routes from '../../../constants/routes';
 import withRouter from 'react-router-dom/withRouter';
 import ErrorBanner from '../../SharedComponents/ErrorBanner';
 import GenericTextInput from '../../SharedComponents/input/GenericTextInput';
-
+import "./AddStudent.css";
 const INITIAL_STATE = {
     students: [{
         firstName: '',
@@ -18,13 +18,14 @@ class AddStudents extends Component{
         this.state = { ...INITIAL_STATE };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleAnotherStudent = this.handleAnotherStudent.bind(this);
+        this.handleRemovingStudent = this.handleRemovingStudent.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
 
     handleSubmit(){
 		const { students } = this.state;
-		const { addTempStudent, updateTempClassStudents, history } = this.props;
+		const { addTempStudent, history } = this.props;
         var isValid = true;
 		students.forEach( student => {
             const {firstName, lastName} = student;
@@ -40,8 +41,7 @@ class AddStudents extends Component{
         if(isValid){
             students.forEach( student => {
                 const { firstName, lastName } = student;
-                const newStudent = addTempStudent(firstName, lastName);
-                updateTempClassStudents(newStudent.id);
+                addTempStudent(firstName, lastName);
             })
             this.setState({...INITIAL_STATE})
             history.push(routes.CONFIRM_NEW_CLASS);
@@ -52,6 +52,7 @@ class AddStudents extends Component{
     handleCancel(){
         const { history } = this.props;
         this.setState({...INITIAL_STATE});
+        this.props.clearTempAll();
         history.push(routes.DASHBOARD);
     }
 
@@ -77,6 +78,14 @@ class AddStudents extends Component{
         });
     }
 
+    handleRemovingStudent( index ) {
+        var newStudentArray = this.state.students.slice();
+        newStudentArray.splice(index, 1);
+        this.setState({ 
+            students: newStudentArray
+        });
+    }
+
     render(){
         const { students, error } = this.state;
 
@@ -90,7 +99,12 @@ class AddStudents extends Component{
                     <tbody>
                     {
                         students.map( (student,index) => 
-                            <NewStudentLine key={index} index={index} onChange={this.handleTextChange} {...students[index]} />
+                            <NewStudentLine 
+                                key={index}
+                                index={index}
+                                onChange={this.handleTextChange}
+                                onRemoval={this.handleRemovingStudent} 
+                                {...students[index]} />
                         )
                     }
                     </tbody>
@@ -117,21 +131,23 @@ const AddAnotherStudent = ( { handleAnotherStudent} ) =>
 const handleStudentTextChange = (handleChange, index, key) => 
     (value) => handleChange(index, key, value)
 
-const NewStudentLine = ( {onChange, index, firstName, lastName} ) => 
-        <tr>
+const NewStudentLine = ( {onChange, onRemoval, index, firstName, lastName} ) => 
+        <tr className="studentRow">
             <td>
+                <label>{index+1 + '.'}</label>
                 <GenericTextInput 
                     value={firstName}
                     handleChange={handleStudentTextChange(onChange, index, 'firstName')}
                     labelText={'First Name'}
                 />
             </td> 
-            <td>
+            <td className="removeBtnContainer">
                 <GenericTextInput 
                     value={lastName}
                     handleChange={handleStudentTextChange(onChange, index, 'lastName')}
                     labelText={'Last Name'}
                 /> 
+                <button type="button" onClick={() => onRemoval(index)}><i className="fas fa-times-circle"></i></button>
             </td>
         </tr>
 
